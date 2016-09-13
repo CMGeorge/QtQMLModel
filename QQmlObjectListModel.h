@@ -262,11 +262,14 @@ public: // C++ API
     }
     void move (int idx, int pos) {
         if (idx != pos) {
-            const int lowest  = qMin (idx, pos);
-            const int highest = qMax (idx, pos);
-            beginMoveRows (noParent (), highest, highest, noParent (), lowest);
-            m_items.move (highest, lowest);
-            endMoveRows ();
+            // FIXME : use begin/end MoveRows when supported by Repeater, since then use remove/insert pair
+            //beginMoveRows (noParent (), idx, idx, noParent (), (idx < pos ? pos +1 : pos));
+            beginRemoveRows (noParent (), idx, idx);
+            beginInsertRows (noParent (), pos, pos);
+            m_items.move (idx, pos);
+            endRemoveRows ();
+            endInsertRows ();
+            //endMoveRows ();
         }
     }
     void remove (ItemType * item) {
