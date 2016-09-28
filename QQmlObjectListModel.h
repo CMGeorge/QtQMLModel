@@ -160,7 +160,7 @@ public: // C++ API
         return ret;
     }
     ItemType * getByUid (const QString & uid) const {
-        return m_indexByUid.value (uid, Q_NULLPTR);
+        return (!m_indexByUid.isEmpty () ? m_indexByUid.value (uid, Q_NULLPTR) : Q_NULLPTR);
     }
     int roleForName (const QByteArray & name) const {
         return m_roles.key (name, -1);
