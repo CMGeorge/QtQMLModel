@@ -19,7 +19,7 @@
 template<typename T> QList<T> qListFromVariant (const QVariantList & list) {
     QList<T> ret;
     ret.reserve (list.size ());
-    for (QVariantList::const_iterator it = list.constBegin (); it != list.constEnd (); it++) {
+    for (QVariantList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
         const QVariant & var = static_cast<QVariant>(* it);
         ret.append (var.value<T> ());
     }
@@ -29,7 +29,7 @@ template<typename T> QList<T> qListFromVariant (const QVariantList & list) {
 template<typename T> QVariantList qListToVariant (const QList<T> & list) {
     QVariantList ret;
     ret.reserve (list.size ());
-    for (typename QList<T>::const_iterator it = list.constBegin (); it != list.constEnd (); it++) {
+    for (typename QList<T>::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
         const T & val = static_cast<T>(* it);
         ret.append (QVariant::fromValue (val));
     }
@@ -38,7 +38,7 @@ template<typename T> QVariantList qListToVariant (const QList<T> & list) {
 
 // custom foreach for QList, which uses no copy and check pointer non-null
 #define FOREACH_PTR_IN_QLIST(_type_, _var_, _list_) \
-    for (typename QList<_type_ *>::const_iterator it = _list_.begin (); it != _list_.end (); it++) \
+    for (typename QList<_type_ *>::const_iterator it = _list_.begin (); it != _list_.end (); ++it) \
         for (_type_ * _var_ = static_cast<_type_ *> (* it); _var_ != Q_NULLPTR; _var_ = Q_NULLPTR)
 
 class QQmlObjectListModelBase : public QAbstractListModel { // abstract Qt base class
@@ -362,7 +362,7 @@ protected: // internal stuff
                 item->setParent (this);
             }
             const QList<int> signalsIdxList = m_signalIdxToRole.keys ();
-            for (QList<int>::const_iterator it = signalsIdxList.constBegin (); it != signalsIdxList.constEnd (); it++) {
+            for (QList<int>::const_iterator it = signalsIdxList.constBegin (); it != signalsIdxList.constEnd (); ++it) {
                 const int signalIdx = static_cast<int> (* it);
                 QMetaMethod notifier = item->metaObject ()->method (signalIdx);
                 connect (item, notifier, this, m_handler, Qt::UniqueConnection);
