@@ -187,8 +187,8 @@ public: // C++ API
                 dereferenceItem (item);
             }
             m_items.clear ();
-            endRemoveRows ();
             updateCounter ();
+            endRemoveRows ();
         }
     }
     void append (ItemType * item) {
@@ -197,8 +197,8 @@ public: // C++ API
             beginInsertRows (noParent (), pos, pos);
             m_items.append (item);
             referenceItem (item);
-            endInsertRows ();
             updateCounter ();
+            endInsertRows ();
         }
     }
     void prepend (ItemType * item) {
@@ -206,8 +206,8 @@ public: // C++ API
             beginInsertRows (noParent (), 0, 0);
             m_items.prepend (item);
             referenceItem (item);
-            endInsertRows ();
             updateCounter ();
+            endInsertRows ();
         }
     }
     void insert (int idx, ItemType * item) {
@@ -215,8 +215,8 @@ public: // C++ API
             beginInsertRows (noParent (), idx, idx);
             m_items.insert (idx, item);
             referenceItem (item);
-            endInsertRows ();
             updateCounter ();
+            endInsertRows ();
         }
     }
     void append (const QList<ItemType *> & itemList) {
@@ -228,8 +228,8 @@ public: // C++ API
             FOREACH_PTR_IN_QLIST (ItemType, item, itemList) {
                 referenceItem (item);
             }
-            endInsertRows ();
             updateCounter ();
+            endInsertRows ();
         }
     }
     void prepend (const QList<ItemType *> & itemList) {
@@ -242,8 +242,8 @@ public: // C++ API
                 referenceItem (item);
                 offset++;
             }
-            endInsertRows ();
             updateCounter ();
+            endInsertRows ();
         }
     }
     void insert (int idx, const QList<ItemType *> & itemList) {
@@ -256,8 +256,8 @@ public: // C++ API
                 referenceItem (item);
                 offset++;
             }
-            endInsertRows ();
             updateCounter ();
+            endInsertRows ();
         }
     }
     void move (int idx, int pos) {
@@ -283,8 +283,8 @@ public: // C++ API
             beginRemoveRows (noParent (), idx, idx);
             ItemType * item = m_items.takeAt (idx);
             dereferenceItem (item);
-            endRemoveRows ();
             updateCounter ();
+            endRemoveRows ();
         }
     }
     ItemType * first (void) const {
