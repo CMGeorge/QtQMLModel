@@ -353,8 +353,7 @@ protected: // internal stuff
         return ret;
     }
     int rowCount (const QModelIndex & parent = QModelIndex ()) const {
-        Q_UNUSED (parent);
-        return m_items.count ();
+        return (!parent.isValid () ? m_items.count () : 0);
     }
     void referenceItem (ItemType * item) {
         if (item != Q_NULLPTR) {
