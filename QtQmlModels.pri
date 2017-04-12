@@ -13,3 +13,4 @@ SOURCES += \
     $$PWD/QQmlObjectListModel.cpp \
     $$PWD/QQmlVariantListModel.cpp
 
+include($$PWD/QtSuperMacros/QtSuperMacros.pri)
