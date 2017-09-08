@@ -1,16 +1,18 @@
+!CONFIG(QT_QML_MODELS){
+    warning(QT_QML_MODELS);
+    # Qt QML Models
+    CONFIG*=QT_QML_MODELS
+    QT += core qml
 
-# Qt QML Models
+    INCLUDEPATH += $$PWD
 
-QT += core qml
+    HEADERS += \
+        $$PWD/QQmlObjectListModel.h \
+        $$PWD/QQmlVariantListModel.h
 
-INCLUDEPATH += $$PWD
+    SOURCES += \
+        $$PWD/QQmlObjectListModel.cpp \
+        $$PWD/QQmlVariantListModel.cpp
 
-HEADERS += \
-    $$PWD/QQmlObjectListModel.h \
-    $$PWD/QQmlVariantListModel.h
-
-SOURCES += \
-    $$PWD/QQmlObjectListModel.cpp \
-    $$PWD/QQmlVariantListModel.cpp
-
-include($$PWD/QtSuperMacros/QtSuperMacros.pri)
+    include($$PWD/QtSuperMacros/QtSuperMacros.pri)
+}
