@@ -14,4 +14,7 @@
         $$PWD/QQmlVariantListModel.cpp
 
     include($$PWD/QtSuperMacros/QtSuperMacros.pri)
+
+HEADERS += \
+    $$PWD/dllimportexport.h
 }

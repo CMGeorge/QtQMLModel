@@ -1,17 +1,19 @@
 
-TARGET = QQmlModels
+TARGET = $$qtLibraryTarget(QQmlModels)
 
 TEMPLATE = lib
 
 TEMPLATE = lib
 CONFIG  *= qt warn_on
 CONFIG  *= relative_qt_rpath
-CONFIG  *= debug_and_release
+CONFIG  *= debug
+CONFIG  *= release
 CONFIG  *= build_all
 PREFIX=$$[QT_INSTALL_PREFIX]
 
-include ($$PWD/QtQmlModels.pri)
+DEFINES += LIB_BUILD
 
+include ($$PWD/QtQmlModels.pri)
 unix:!symbian {
     headers.path=$$PREFIX/include/QQmlModels
     headers.files=$$HEADERS

@@ -6,7 +6,8 @@
 #include <QVariant>
 #include <QList>
 
-class QQmlVariantListModel : public QAbstractListModel {
+#include "dllimportexport.h"
+class QQMLMODELS_EXPORT QQmlVariantListModel : public QAbstractListModel {
     Q_OBJECT
     Q_PROPERTY (int count READ count NOTIFY countChanged)
 

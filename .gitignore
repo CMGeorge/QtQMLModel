@@ -7,3 +7,9 @@ Makefile.Debug
 Makefile.Release
 .moc
 .obj
+*.QQmlModels.Debug
+object_script.QQmlModels.Release
+object_script.QQmlModelsd.Debug
+debug/
+release/
+libQQmlModels.so
