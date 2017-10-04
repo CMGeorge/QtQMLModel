@@ -1,5 +1,4 @@
 !CONFIG(QT_QML_MODELS){
-    warning(QT_QML_MODELS);
     # Qt QML Models
     CONFIG*=QT_QML_MODELS
     QT += core qml

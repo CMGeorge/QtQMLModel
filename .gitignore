@@ -1,1 +1,9 @@
 *.user*
+libQQmlModels.a
+libQQmlModels.prl
+.qmake.stash
+Makefile
+Makefile.Debug
+Makefile.Release
+.moc
+.obj
