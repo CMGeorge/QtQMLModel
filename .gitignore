@@ -13,3 +13,5 @@ object_script.QQmlModelsd.Debug
 debug/
 release/
 libQQmlModels.so
+QQmlModels.framework
+QQmlModels_debug.framework

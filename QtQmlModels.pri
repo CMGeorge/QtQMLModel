@@ -18,3 +18,6 @@
 HEADERS += \
     $$PWD/dllimportexport.h
 }
+
+DISTFILES += \
+    $$PWD/mac/mac.pri
