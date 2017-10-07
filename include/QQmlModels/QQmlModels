@@ -1,0 +1,6 @@
+#ifndef QT_QQMLMODELS_MODULE_H
+#define QT_QQMLMODELS_MODULE_H
+#include <QQmlModels/QQmlModelsDepends>
+#include "dllimportexport.h"
+#include "qqmlmodelsversion.h"
+#endif
