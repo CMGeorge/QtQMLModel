@@ -16,3 +16,5 @@ libQQmlModels.so
 QQmlModels.framework
 QQmlModels_debug.framework
 libQQmlModels_*
+mkspecs
+.qmake.cache
