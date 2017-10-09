@@ -76,7 +76,7 @@ signals: // notifier
     void countChanged (void);
 };
 
-template<class ItemType> class QQMLMODELS_EXPORT QQmlObjectListModel : public QQmlObjectListModelBase {
+template<class ItemType> class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase {
 public:
     explicit QQmlObjectListModel (QObject *          parent      = Q_NULLPTR,
                                   const QByteArray & displayRole = QByteArray (),
