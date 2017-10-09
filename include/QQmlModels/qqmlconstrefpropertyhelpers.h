@@ -1,1 +1,1 @@
-#include "../../src/QQmlModels/QtSuperMacros/qqmlconstrefpropertyhelpers.h"
+#include "../../src/qqmlmodels/QtSuperMacros/qqmlconstrefpropertyhelpers.h"

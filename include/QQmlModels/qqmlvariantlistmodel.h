@@ -1,1 +1,1 @@
-#include "../../src/QQmlModels/qqmlvariantlistmodel.h"
+#include "../../src/qqmlmodels/qqmlvariantlistmodel.h"

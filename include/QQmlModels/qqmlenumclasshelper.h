@@ -1,1 +1,1 @@
-#include "../../src/QQmlModels/QtSuperMacros/qqmlenumclasshelper.h"
+#include "../../src/qqmlmodels/QtSuperMacros/qqmlenumclasshelper.h"

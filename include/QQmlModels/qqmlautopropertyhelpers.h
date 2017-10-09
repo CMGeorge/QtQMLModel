@@ -1,1 +1,1 @@
-#include "../../src/QQmlModels/QtSuperMacros/qqmlautopropertyhelpers.h"
+#include "../../src/qqmlmodels/QtSuperMacros/qqmlautopropertyhelpers.h"

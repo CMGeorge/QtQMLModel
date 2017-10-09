@@ -1,1 +1,1 @@
-#include "../../src/QQmlModels/QtSuperMacros/qqmlhelperscommon.h"
+#include "../../src/qqmlmodels/QtSuperMacros/qqmlhelperscommon.h"
