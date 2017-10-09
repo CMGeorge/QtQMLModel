@@ -1,6 +1,9 @@
 LIB_NAME=QQmlModels
 TARGET = $$LIB_NAME
-DEFINES += QQML_LIB_BUILD
+QT += core \
+        qml
+CONFIG-=create_cmake
+DEFINES += QQML_EXPORT
 include ($$PWD/QtQmlModels.pri)
-#HEADERS += $$MODULE_HEADERS
+HEADERS += $$MODULE_HEADERS
 load(qt_module)

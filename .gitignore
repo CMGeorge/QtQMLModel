@@ -18,3 +18,7 @@ QQmlModels_debug.framework
 libQQmlModels_*
 mkspecs
 .qmake.cache
+lib/
+include/
+src/QQmlModels/QQmlModelsd_resource.rc
+src/QQmlModels/QQmlModels_resource.rc

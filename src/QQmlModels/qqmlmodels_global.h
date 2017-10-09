@@ -1,8 +1,8 @@
-#ifndef DLLIMPORTEXPORT_H
-#define DLLIMPORTEXPORT_H
+#ifndef QQMLMODELS_GLOBAL_H
+#define QQMLMODELS_GLOBAL_H
 
 #ifndef QT_STATIC
-#   if defined(QQML_LIB_BUILD)
+#   if defined(QQML_EXPORT)
 #       define QQMLMODELS_EXPORT Q_DECL_EXPORT
 #   else
 #       define QQMLMODELS_EXPORT Q_DECL_IMPORT
@@ -11,4 +11,4 @@
 #   define QQMLMODELS_EXPORT
 #endif
 //#define  QQMLMODELS_EXPORT
-#endif // DLLIMPORTEXPORT_H
+#endif // QQMLMODELS_GLOBAL_H
