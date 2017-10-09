@@ -4,6 +4,6 @@ QT += core \
         qml
 CONFIG-=create_cmake
 DEFINES += QQML_EXPORT
-include ($$PWD/QtQmlModels.pri)
+include ($$PWD/qqmlmodels.pri)
 HEADERS += $$MODULE_HEADERS
 load(qt_module)
