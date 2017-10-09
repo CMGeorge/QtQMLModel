@@ -27,16 +27,22 @@ endmacro()
 macro(_populate_QQmlModels_target_properties Configuration LIB_LOCATION IMPLIB_LOCATION)
     set_property(TARGET Qt5::QQmlModels APPEND PROPERTY IMPORTED_CONFIGURATIONS ${Configuration})
 
-    set(imported_location "${_qt5QQmlModels_install_prefix}/lib/${LIB_LOCATION}")
+    set(imported_location "${_qt5QQmlModels_install_prefix}/bin/${LIB_LOCATION}")
     _qt5_QQmlModels_check_file_exists(${imported_location})
     set_target_properties(Qt5::QQmlModels PROPERTIES
         "INTERFACE_LINK_LIBRARIES" "${_Qt5QQmlModels_LIB_DEPENDENCIES}"
         "IMPORTED_LOCATION_${Configuration}" ${imported_location}
-        "IMPORTED_SONAME_${Configuration}" "libQt5QQmlModels.so"
         # For backward compatibility with CMake < 2.8.12
         "IMPORTED_LINK_INTERFACE_LIBRARIES_${Configuration}" "${_Qt5QQmlModels_LIB_DEPENDENCIES}"
     )
 
+    set(imported_implib "${_qt5QQmlModels_install_prefix}/lib/${IMPLIB_LOCATION}")
+    _qt5_QQmlModels_check_file_exists(${imported_implib})
+    if(NOT "${IMPLIB_LOCATION}" STREQUAL "")
+        set_target_properties(Qt5::QQmlModels PROPERTIES
+        "IMPORTED_IMPLIB_${Configuration}" ${imported_implib}
+        )
+    endif()
 endmacro()
 
 if (NOT TARGET Qt5::QQmlModels)
@@ -142,8 +148,11 @@ if (NOT TARGET Qt5::QQmlModels)
         )
     endif()
 
+    _populate_QQmlModels_target_properties(RELEASE "Qt5QQmlModels.dll" "libQt5QQmlModels.a" )
 
-    _populate_QQmlModels_target_properties(DEBUG "libQt5QQmlModels.so" "" )
+
+
+    _populate_QQmlModels_target_properties(DEBUG "Qt5QQmlModelsd.dll" "libQt5QQmlModelsd.a" )
 
 
 

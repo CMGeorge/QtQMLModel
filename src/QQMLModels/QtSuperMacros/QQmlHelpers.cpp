@@ -1,10 +1,10 @@
 
-#include "QQmlEnumClassHelper.h"
-#include "QQmlListPropertyHelper.h"
-#include "QQmlVarPropertyHelpers.h"
-#include "QQmlPtrPropertyHelpers.h"
-#include "QQmlConstRefPropertyHelpers.h"
-#include "QQmlAutoPropertyHelpers.h"
+#include "qqmlenumclasshelper.h"
+#include "qqmllistpropertyhelper.h"
+#include "qqmlvarpropertyhelpers.h"
+#include "qqmlptrpropertyhelpers.h"
+#include "qqmlconstrefpropertyhelpers.h"
+#include "qqmlautopropertyhelpers.h"
 
 // TODO : rewrite this doc
 

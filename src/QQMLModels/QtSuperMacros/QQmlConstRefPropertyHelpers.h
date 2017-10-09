@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "QQmlHelpersCommon.h"
+#include "qqmlhelperscommon.h"
 
 #define QML_WRITABLE_CSTREF_PROPERTY(type, name) \
     protected: \

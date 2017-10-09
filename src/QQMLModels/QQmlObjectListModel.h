@@ -15,9 +15,8 @@
 #include <QStringBuilder>
 #include <QVariant>
 #include <QVector>
-
+//#define QQMLMODELS_EXPORT
 #include "dllimportexport.h"
-
 template<typename T> QList<T> qListFromVariant (const QVariantList & list) {
     QList<T> ret;
     ret.reserve (list.size ());

@@ -6,16 +6,16 @@ QT += core qml
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/QQmlVarPropertyHelpers.h \
-    $$PWD/QQmlPtrPropertyHelpers.h \
-    $$PWD/QQmlEnumClassHelper.h \
-    $$PWD/QQmlConstRefPropertyHelpers.h \
-    $$PWD/QQmlListPropertyHelper.h \
-    $$PWD/QQmlAutoPropertyHelpers.h \
-    $$PWD/QQmlHelpersCommon.h
+    $$PWD/qqmlautopropertyhelpers.h \
+    $$PWD/qqmlconstrefpropertyhelpers.h \
+    $$PWD/qqmlenumclasshelper.h \
+    $$PWD/qqmlhelperscommon.h \
+    $$PWD/qqmllistpropertyhelper.h \
+    $$PWD/qqmlptrpropertyhelpers.h \
+    $$PWD/qqmlvarpropertyhelpers.h
 
 SOURCES += \
-    $$PWD/QQmlHelpers.cpp
+    $$PWD/qqmlhelpers.cpp
 
 DISTFILES += \
     $$PWD/README.md \

@@ -1,5 +1,5 @@
 
-#include "QQmlVariantListModel.h"
+#include "qqmlvariantlistmodel.h"
 
 #define NO_PARENT QModelIndex ()
 #define BASE_ROLE Qt::UserRole

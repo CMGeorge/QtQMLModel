@@ -4,7 +4,7 @@
 #include <QVector>
 #include <QQmlListProperty>
 
-#include "QQmlHelpersCommon.h"
+#include "qqmlhelperscommon.h"
 
 template<class ObjType> class QQmlSmartListWrapper : public QQmlListProperty<ObjType> {
 public:

@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "QQmlHelpersCommon.h"
+#include "qqmlhelperscommon.h"
 
 // NOTE : individual macros for getter, setter, notifier, and member
 

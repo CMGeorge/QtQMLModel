@@ -5,7 +5,7 @@
 #include <QAbstractListModel>
 #include <QVariant>
 #include <QList>
-
+//#define QQMLMODELS_EXPORT
 #include "dllimportexport.h"
 class QQMLMODELS_EXPORT QQmlVariantListModel : public QAbstractListModel {
     Q_OBJECT
