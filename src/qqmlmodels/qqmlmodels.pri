@@ -7,9 +7,10 @@
 
     SOURCES += \
         $$PWD/qqmlobjectlistmodel.cpp \
-        $$PWD/qqmlvariantlistmodel.cpp
+        $$PWD/qqmlvariantlistmodel.cpp \
+		$$PWD/qqmlobjectsortfilterlistmodel.cpp
 
-    include($$PWD/QtSuperMacros/QtSuperMacros.pri)
+    include($$PWD/qtsupermacros/qtsupermacros.pri)
 
     MODULE_HEADERS += \
             $$PWD/qqmlmodels_global.h \
@@ -19,3 +20,6 @@
 
 DISTFILES += \
     $$PWD/mac/mac.pri
+
+HEADERS += \
+    $$PWD/qqmlobjectsortfilterlistmodel.h
