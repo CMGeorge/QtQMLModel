@@ -22,3 +22,6 @@ lib/
 include/
 src/QQmlModels/QQmlModelsd_resource.rc
 src/QQmlModels/QQmlModels_resource.rc
+src/build-*
+src/qqmlmodels/QQmlModels_resource.rc
+src/qqmlmodels/QQmlModelsd_resource.rc
