@@ -1,0 +1,6 @@
+
+<RCC>
+    <qresource prefix="/ro/wesell/QtQMLModel">
+        <file>qmldir</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,18 @@
+{
+  "name": "ro.wesell.QtQMLModel",
+  "author": {
+    "name": "George Calugar",
+    "email": "george@wesell.ro"
+  },
+  "repository": {
+    "type": "GIT",
+    "url": "https://github.com/CMGeorge/QtQMLModel.git"
+  },
+  "version": {
+    "label": "0.0.1"
+  },
+  "dependencies": [
+  ],
+  "license": "MIT",
+  "priFilename": "QtQMLModel.pri"
+}

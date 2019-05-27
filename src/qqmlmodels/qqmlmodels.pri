@@ -18,8 +18,5 @@
             $$PWD/qqmlvariantlistmodel.h
 #}
 
-DISTFILES += \
-    $$PWD/mac/mac.pri
-
-HEADERS += \
+HEADERS += $$MODULE_HEADERS \
     $$PWD/qqmlobjectsortfilterlistmodel.h
