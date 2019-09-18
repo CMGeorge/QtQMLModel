@@ -10,7 +10,7 @@
         $$PWD/qqmlvariantlistmodel.cpp \
 		$$PWD/qqmlobjectsortfilterlistmodel.cpp
 
-    include($$PWD/qtsupermacros/qtsupermacros.pri)
+    include($$PWD/QtSuperMacros/qtsupermacros.pri)
 
     MODULE_HEADERS += \
             $$PWD/qqmlmodels_global.h \
