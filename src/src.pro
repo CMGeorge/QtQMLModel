@@ -1,3 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS += \
-    qqmlmodels
+SUBDIRS += QmlModels
