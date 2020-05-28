@@ -1,5 +1,5 @@
 %modules = ( # path to module name map
-    "QmlModels" => "$basedir/src/QmlModels",
+    "qmlmodels" => "$basedir/src/qmlmodels",
 );
 %moduleheaders = ( # restrict the module headers to those found in relative path
 );
