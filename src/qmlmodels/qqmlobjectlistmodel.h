@@ -40,7 +40,7 @@ template<typename T> QVariantList qListToVariant (const QList<T> & list) {
 // custom foreach for QList, which uses no copy and check pointer non-null
 #define FOREACH_PTR_IN_QLIST(_type_, _var_, _list_) \
     for (typename QList<_type_ *>::const_iterator it = _list_.begin (); it != _list_.end (); ++it) \
-        for (_type_ * _var_ = static_cast<_type_ *> (* it); _var_ != Q_NULLPTR; _var_ = Q_NULLPTR)
+    for (_type_ * _var_ = static_cast<_type_ *> (* it); _var_ != Q_NULLPTR; _var_ = Q_NULLPTR)
 
 class QQMLMODELS_EXPORT QQmlObjectListModelBase : public QAbstractListModel { // abstract Qt base class
     Q_OBJECT
@@ -263,14 +263,11 @@ public: // C++ API
     }
     void move (int idx, int pos) {
         if (idx != pos) {
-            // FIXME : use begin/end MoveRows when supported by Repeater, since then use remove/insert pair
-            //beginMoveRows (noParent (), idx, idx, noParent (), (idx < pos ? pos +1 : pos));
-            beginRemoveRows (noParent (), idx, idx);
-            beginInsertRows (noParent (), pos, pos);
-            m_items.move (idx, pos);
-            endRemoveRows ();
-            endInsertRows ();
-            //endMoveRows ();
+            const int lowest  = qMin (idx, pos);
+            const int highest = qMax (idx, pos);
+            beginMoveRows (noParent (), highest, highest, noParent (), lowest);
+            m_items.move (highest, lowest);
+            endMoveRows ();
         }
     }
     void remove (ItemType * item) {

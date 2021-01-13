@@ -290,14 +290,12 @@ void QQmlVariantListModel::insertList (int idx, const QVariantList & itemList)
 void QQmlVariantListModel::move (int idx, int pos)
 {
     if (idx != pos) {
-        // FIXME : use begin/end MoveRows when supported by Repeater, since then use remove/insert pair
-        //beginMoveRows (NO_PARENT, idx, idx, NO_PARENT, (idx < pos ? pos +1 : pos));
-        beginRemoveRows (NO_PARENT, idx, idx);
-        beginInsertRows (NO_PARENT, pos, pos);
-        m_items.move (idx, pos);
-        endRemoveRows ();
-        endInsertRows ();
-        //endMoveRows ();
+        const int lowest  = qMin (idx, pos);
+        const int highest = qMax (idx, pos);
+        beginMoveRows (NO_PARENT, highest, highest, NO_PARENT, lowest);
+
+        m_items.move (highest, lowest);
+        endMoveRows ();
     }
 }
 
