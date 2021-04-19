@@ -263,10 +263,10 @@ public: // C++ API
     }
     void move (int idx, int pos) {
         if (idx != pos) {
-            const int lowest  = qMin (idx, pos);
-            const int highest = qMax (idx, pos);
-            beginMoveRows (noParent (), highest, highest, noParent (), lowest);
-            m_items.move (highest, lowest);
+//            const int lowest  = qMin (idx, pos);
+//            const int highest = qMax (idx, pos);
+            beginMoveRows (noParent (), idx, idx, noParent (), pos);
+            m_items.move (idx, pos);
             endMoveRows ();
         }
     }
