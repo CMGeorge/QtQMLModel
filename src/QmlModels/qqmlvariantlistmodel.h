@@ -21,7 +21,7 @@ public: // QAbstractItemModel interface reimplemented
     QVariant data (const QModelIndex & index, int role) const;
     QHash<int, QByteArray> roleNames (void) const;
 
-public slots: // public API
+public Q_SLOTS: // public API
     void clear (void);
     int count (void) const;
     bool isEmpty (void) const;
@@ -37,7 +37,7 @@ public slots: // public API
     QVariant get (int idx) const;
     QVariantList list (void) const;
 
-signals: // notifiers
+Q_SIGNALS: // notifiers
     void countChanged (int count);
 
 protected:

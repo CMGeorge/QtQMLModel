@@ -19,7 +19,7 @@
             bool ret = false; \
             if ((ret = (m_##name != name))) { \
                 m_##name = name; \
-                emit name##Changed (m_##name); \
+                Q_EMIT name##Changed (m_##name); \
             } \
             return ret; \
         } \
@@ -40,7 +40,7 @@
             bool ret = false; \
             if ((ret = (m_##name != name))) { \
                 m_##name = name; \
-                emit name##Changed (m_##name); \
+                Q_EMIT name##Changed (m_##name); \
             } \
             return ret; \
         } \

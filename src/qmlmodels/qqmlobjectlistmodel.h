@@ -49,7 +49,7 @@ class QQMLMODELS_EXPORT QQmlObjectListModelBase : public QAbstractListModel { //
 public:
     explicit QQmlObjectListModelBase (QObject * parent = Q_NULLPTR) : QAbstractListModel (parent) { }
 
-public slots: // virtual methods API for QML
+public Q_SLOTS: // virtual methods API for QML
     virtual int size (void) const = 0;
     virtual int count (void) const = 0;
     virtual bool isEmpty (void) const = 0;
@@ -69,10 +69,10 @@ public slots: // virtual methods API for QML
     virtual QObject * getLast (void) const = 0;
     virtual QVariantList toVarArray (void) const = 0;
 
-protected slots: // internal callback
+protected Q_SLOTS: // internal callback
     virtual void onItemPropertyChanged (void) = 0;
 
-signals: // notifier
+Q_SIGNALS: // notifier
     void countChanged (void);
 };
 
@@ -113,7 +113,7 @@ public:
             }
             else {
                 static const QByteArray CLASS_NAME = (QByteArrayLiteral ("QQmlObjectListModel<") % m_metaObj.className () % '>');
-                qWarning () << "Can't have" << propName << "as a role name in" << qPrintable (CLASS_NAME);
+                qWarning () << "Can't have" << propName << "as a role name in" << qPrintable (QString::fromLatin1(CLASS_NAME));
             }
         }
     }
@@ -403,7 +403,7 @@ protected: // internal stuff
             if (m_roles.value (role) == m_dispRoleName) {
                 rolesList.append (Qt::DisplayRole);
             }
-            emit dataChanged (index, index, rolesList);
+            Q_EMIT dataChanged (index, index, rolesList);
         }
         if (!m_uidRoleName.isEmpty ()) {
             const QByteArray roleName = m_roles.value (role, emptyBA ());
@@ -422,7 +422,7 @@ protected: // internal stuff
     inline void updateCounter (void) {
         if (m_count != m_items.count ()) {
             m_count = m_items.count ();
-            emit countChanged ();
+            Q_EMIT countChanged ();
         }
     }
 
