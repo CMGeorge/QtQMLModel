@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "qqmlhelperscommon.h"
+#pragma GCC diagnostic ignored "-Wfloat-equal"
 
 #define QML_WRITABLE_VAR_PROPERTY(type, name) \
 protected: \
@@ -47,7 +48,7 @@ public:                                                                        \
         bool ret = false;                                                      \
         if ((ret = (m_##name##ErrorId != name##ErrorId))) {                    \
             m_##name##ErrorId = name##ErrorId;                                 \
-            emit name##ErrorIdChanged(m_##name##ErrorId);                       \
+            Q_EMIT name##ErrorIdChanged(m_##name##ErrorId);                       \
         }                                                                      \
     return ret;                                                            \
     }\
@@ -56,13 +57,13 @@ public Q_SLOTS:                                                                \
         bool ret = false;                                                      \
         if ((ret = (m_##name != name))) {                                      \
             m_##name = name;                                                   \
-            emit name##Changed(m_##name);                                      \
+            Q_EMIT name##Changed(m_##name);                                      \
             if (!m_##name##_modified) {                                        \
                 m_##name##_modified = true;                                    \
-                emit name##Modified(m_##name);                                 \
+                Q_EMIT name##Modified(m_##name);                                 \
             } else if (m_##name##_initial == m_##name) {                       \
                 m_##name##_modified = false;                                   \
-                emit name##Modified(m_##name);                                 \
+                Q_EMIT name##Modified(m_##name);                                 \
             }                                                                  \
 update_##name##ErrorId(0);                                                       \
         }                                                                      \
@@ -74,7 +75,7 @@ update_##name##ErrorId(0);                                                      
         m_##name##_initial = name;                                             \
         if ((ret = (m_##name != name))) {                                      \
             m_##name = name;                                                   \
-            emit name##Changed(m_##name);                                      \
+            Q_EMIT name##Changed(m_##name);                                      \
         }                                                                      \
         return ret;                                                            \
     }                                                                          \

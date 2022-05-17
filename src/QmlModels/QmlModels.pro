@@ -1,6 +1,6 @@
 TEMPLATE = lib
-#MODULE = qmlmodels
-#TARGET=qmlmodels
+MODULE = CPPQmlModels
+TARGET=CPPQmlModels
 #OUT_PWD = $$PWD
 #DESTDIR = $$[QT_INSTALL_LIBS]
 #QT += core \
