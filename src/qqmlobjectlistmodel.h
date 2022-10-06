@@ -74,6 +74,10 @@ protected Q_SLOTS: // internal callback
 
 Q_SIGNALS: // notifier
     void countChanged (void);
+    /** Emitted when an item is about to be moved */
+    void itemAboutToBeMoved(QObject* item, int src, int dest);
+    /** Emitted after an item have been moved */
+    void itemMoved(QObject* item, int src, int dest);
 };
 
 template<class ItemType> class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase {
@@ -262,12 +266,12 @@ public: // C++ API
         }
     }
     void move (int idx, int pos) {
-        if (idx != pos) {
-//            const int lowest  = qMin (idx, pos);
-//            const int highest = qMax (idx, pos);
-            beginMoveRows (noParent (), idx, idx, noParent (), pos);
+        if (idx != pos && idx >=0 && pos>=0 && idx < m_items.size() && pos < m_items.size()) {
+            itemAboutToBeMoved(m_items.at(idx), idx, pos);
+            beginMoveRows (noParent (), idx, idx, noParent (), (idx < pos ? pos +1 : pos));
             m_items.move (idx, pos);
             endMoveRows ();
+            itemMoved(m_items.at(idx), idx, pos);
         }
     }
     void remove (ItemType * item) {
