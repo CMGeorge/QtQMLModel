@@ -3,8 +3,8 @@ MODULE = CPPQmlModels
 TARGET=CPPQmlModels
 #OUT_PWD = $$PWD
 #DESTDIR = $$[QT_INSTALL_LIBS]
-#QT += core \
-#        qml
+QT += core \
+        qml
 DEFINES += QQML_EXPORT
 include ($$PWD/qqmlmodels.pri)
 #HEADERS += $$MODULE_HEADERS

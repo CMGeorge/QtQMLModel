@@ -16,10 +16,10 @@ public:
     ~QQmlVariantListModel (void);
 
 public: // QAbstractItemModel interface reimplemented
-    int rowCount (const QModelIndex & parent = QModelIndex ()) const;
-    bool setData (const QModelIndex & index, const QVariant & value, int role);
-    QVariant data (const QModelIndex & index, int role) const;
-    QHash<int, QByteArray> roleNames (void) const;
+    int rowCount (const QModelIndex & parent = QModelIndex ()) const override;
+    bool setData (const QModelIndex & index, const QVariant & value, int role) override;
+    QVariant data (const QModelIndex & index, int role) const override;
+    QHash<int, QByteArray> roleNames (void) const override;
 
 public Q_SLOTS: // public API
     void clear (void);
