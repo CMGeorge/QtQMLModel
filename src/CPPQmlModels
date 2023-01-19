@@ -1,0 +1,6 @@
+#ifndef CPPQMLMODELS_H
+#define CPPQMLMODELS_H
+#include <qqmlvarpropertyhelpers.h>
+#include <qqmlptrpropertyhelpers.h>
+#include <qqmlobjectlistmodel.h>
+#endif // CPPQMLMODELS_H
