@@ -46,8 +46,7 @@ qt_add_library(${PROJECT_NAME} ${LIB_COMPILE_MODE}
 
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    PUBLIC_HEADERS
-        src/QtSuperMacros/qqmlautopropertyhelpers.h
+    PUBLIC_HEADER "${PROJECT_PUBLIC_HEADERS}"
 
 )
 add_definitions(-DQQML_EXPORT)
