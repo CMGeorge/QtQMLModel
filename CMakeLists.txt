@@ -9,7 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_target_properties(PROPERTIES LINKER_LANGUAGE CXX)
 include(GenerateExportHeader)
 find_package(Qt6 COMPONENTS REQUIRED
-    Core)
+    Core
+    Qml
+)
 
 qt_add_library(CPPQmlModels ${LIB_COMPILE_MODE}
 #    PUBLIC
@@ -45,4 +47,6 @@ target_include_directories(CPPQmlModels
 
 target_link_libraries(CPPQmlModels PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Qml
+
 )
