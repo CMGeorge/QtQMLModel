@@ -84,4 +84,4 @@ install(
 )
 
 
-add_subdirectory(tests/auto/DLLExportImportTest)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests/auto/DLLExportImportTest)
