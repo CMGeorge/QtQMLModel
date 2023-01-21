@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
-set(PROJECT_NAME CPPQmlModels)
-project(${PROJECT_NAME} VERSION 1.0 LANGUAGES CXX)
+set(CPP_QML_PROJECT_NAME CPPQmlModels)
+project(${CPP_QML_PROJECT_NAME} VERSION 1.0 LANGUAGES CXX)
 
 
 set(CMAKE_AUTOUIC ON)
@@ -37,7 +37,7 @@ set(PROJECT_PUBLIC_HEADERS
     src/qqmlobjectlistmodelbase.h
 
 )
-qt_add_library(${PROJECT_NAME} ${LIB_COMPILE_MODE}
+qt_add_library(${CPP_QML_PROJECT_NAME} ${LIB_COMPILE_MODE}
     #    PUBLIC
 
 
@@ -52,8 +52,8 @@ qt_add_library(${PROJECT_NAME} ${LIB_COMPILE_MODE}
 
 
 )
-target_compile_definitions(${PROJECT_NAME} PRIVATE -DQQML_EXPORT)
-set_target_properties(${PROJECT_NAME} PROPERTIES
+target_compile_definitions(${CPP_QML_PROJECT_NAME} PRIVATE -DQQML_EXPORT)
+set_target_properties(${CPP_QML_PROJECT_NAME} PROPERTIES
     PUBLIC_HEADER
     "${PROJECT_PUBLIC_HEADERS};src/qqmlvariantlistmodel.h"
 
@@ -61,7 +61,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 
-target_include_directories(${PROJECT_NAME}
+target_include_directories(${CPP_QML_PROJECT_NAME}
     PUBLIC
     src/QtSuperMacros
     src
@@ -69,18 +69,18 @@ target_include_directories(${PROJECT_NAME}
 #add_subdirectory(src)
 
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${CPP_QML_PROJECT_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Qml
 
 )
 
-message("CMAKE_INSTALL_INCLUDEDIR  = ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}")
+message("CMAKE_INSTALL_INCLUDEDIR  = ${CMAKE_INSTALL_INCLUDEDIR}/${CPP_QML_PROJECT_NAME}")
 install(
-    TARGETS ${PROJECT_NAME}
+    TARGETS ${CPP_QML_PROJECT_NAME}
     LIBRARY
     PUBLIC_HEADER
-    DESTINATION  ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+    DESTINATION  ${CMAKE_INSTALL_INCLUDEDIR}/${CPP_QML_PROJECT_NAME}
 )
 
 
