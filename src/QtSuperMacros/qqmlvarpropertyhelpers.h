@@ -4,7 +4,7 @@
 #include <QObject>
 
 #include "qqmlhelperscommon.h"
-#pragma GCC diagnostic ignored "-Wfloat-equal"
+//#pragma GCC diagnostic ignored "-Wfloat-equal"
 
 #define QML_WRITABLE_VAR_PROPERTY(type, name) \
 protected: \

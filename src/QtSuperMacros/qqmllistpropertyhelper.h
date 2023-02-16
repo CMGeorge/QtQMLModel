@@ -2,7 +2,7 @@
 #define QQMLLISTPROPERTYHELPER
 
 #include <QVector>
-#include <QQmlListProperty>
+#include <QtQml/QQmlListProperty>
 
 #include "qqmlhelperscommon.h"
 

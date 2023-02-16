@@ -1,30 +1,30 @@
 cmake_minimum_required(VERSION 3.22)
 
-set(CPP_QML_PROJECT_NAME CPPQmlModels)
-project(${CPP_QML_PROJECT_NAME} VERSION 1.0 LANGUAGES CXX)
+project(CPPQmlModels VERSION 1.0 LANGUAGES CXX)
 
-
-set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-
 #set(CMAKE_INCLUDE_CURRENT_DIR ON)
-include_directories(AFTER src/QtSuperMacros/)
 
 set_target_properties(PROPERTIES LINKER_LANGUAGE CXX)
 include(GenerateExportHeader)
 find_package(Qt6 COMPONENTS REQUIRED
     Core
     Qml
-)
+    )
 
-set(PROJECT_PUBLIC_HEADERS
+qt_add_library(CPPQmlModels ${LIB_COMPILE_MODE}
+#    PUBLIC
     src/qqmlmodels_global.h
 
     src/qqmlobjectlistmodel.h
+    src/qqmlobjectlistmodel.cpp
+    #I don't know how to use this.. so i coment this until future implementation
+#    src/qqmlobjectsortfilterlistmodel.h
+#    src/qqmlobjectsortfilterlistmodel.cpp
+    src/qqmlvariantlistmodel.h
+    src/qqmlvariantlistmodel.cpp
+
     src/QtSuperMacros/qqmlautopropertyhelpers.h
     src/QtSuperMacros/qqmlconstrefpropertyhelpers.h
     src/QtSuperMacros/qqmlenumclasshelper.h
@@ -33,35 +33,11 @@ set(PROJECT_PUBLIC_HEADERS
     src/QtSuperMacros/qqmllistpropertyhelper.h
     src/QtSuperMacros/qqmlptrpropertyhelpers.h
     src/QtSuperMacros/qqmlvarpropertyhelpers.h
-    src/QtSuperMacros/qqmlhelperscommon.h
-    src/qqmlobjectlistmodelbase.h
-
-)
-qt_add_library(${CPP_QML_PROJECT_NAME} ${LIB_COMPILE_MODE}
-    #    PUBLIC
-
-
-#    src/qqmlobjectlistmodel.cpp
-    #I don't know how to use this.. so i coment this until future implementation
-    #    src/qqmlobjectsortfilterlistmodel.h
-    #    src/qqmlobjectsortfilterlistmodel.cpp
-    src/qqmlvariantlistmodel.cpp
-    src/qqmlobjectlistmodelbase.cpp
-
-    ${PROJECT_PUBLIC_HEADERS}
-
-
-)
-target_compile_definitions(${CPP_QML_PROJECT_NAME} PRIVATE -DQQML_EXPORT)
-set_target_properties(${CPP_QML_PROJECT_NAME} PROPERTIES
-    PUBLIC_HEADER
-    "${PROJECT_PUBLIC_HEADERS};src/qqmlvariantlistmodel.h"
-
-
 )
 
+add_definitions(-DQQML_EXPORT)
 
-target_include_directories(${CPP_QML_PROJECT_NAME}
+target_include_directories(CPPQmlModels
     PUBLIC
     src/QtSuperMacros
     src
@@ -69,19 +45,7 @@ target_include_directories(${CPP_QML_PROJECT_NAME}
 #add_subdirectory(src)
 
 
-target_link_libraries(${CPP_QML_PROJECT_NAME} PRIVATE
+target_link_libraries(CPPQmlModels PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Qml
-
 )
-
-message("CMAKE_INSTALL_INCLUDEDIR  = ${CMAKE_INSTALL_INCLUDEDIR}/${CPP_QML_PROJECT_NAME}")
-install(
-    TARGETS ${CPP_QML_PROJECT_NAME}
-    LIBRARY
-    PUBLIC_HEADER
-    DESTINATION  ${CMAKE_INSTALL_INCLUDEDIR}/${CPP_QML_PROJECT_NAME}
-)
-
-
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests/auto/DLLExportImportTest)
