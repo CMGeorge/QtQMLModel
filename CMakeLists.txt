@@ -35,7 +35,6 @@ qt_add_library(CPPQmlModels ${LIB_COMPILE_MODE}
     src/QtSuperMacros/qqmlvarpropertyhelpers.h
 )
 
-add_definitions(-DQQML_EXPORT)
 
 target_include_directories(CPPQmlModels
     PUBLIC
