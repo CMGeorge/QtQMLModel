@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_target_properties(PROPERTIES LINKER_LANGUAGE CXX)
 include(GenerateExportHeader)
 if (QQML_EXPORT)
-    warning("Build CPPQmlModels as Exported Library")
+    message("Build CPPQmlModels as Exported Library")
     add_definitions(-DQQML_EXPORT)
 endif()
 find_package(Qt6 COMPONENTS REQUIRED
