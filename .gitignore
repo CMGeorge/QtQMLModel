@@ -27,4 +27,3 @@ src/qqmlmodels/QQmlModels_resource.rc
 src/qqmlmodels/QQmlModelsd_resource.rc
 build_5_14_2
 build_5_15
-tests/auto/build-*
