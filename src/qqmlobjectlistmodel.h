@@ -440,6 +440,13 @@ private: // data members
     QHash<int, int>            m_signalIdxToRole;
     QList<ItemType *>          m_items;
     QHash<QString, ItemType *> m_indexByUid;
+       friend QDebug operator<<(QDebug debug, const QQmlObjectListModel* ret){
+           debug.nospace()<<"QQmlObjectListModel Content: "<<ret->count()<<"\n";
+           for (int i=0; i<ret->count();i++){
+               debug.nospace() << "Item[" << i << "] = " << ret->get(i) << '\n';
+           }
+           return debug;
+       }
 };
 
 #define QML_OBJMODEL_PROPERTY(type, name) \
