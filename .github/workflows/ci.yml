@@ -74,6 +74,8 @@ jobs:
         set -e
         if [ -f build/compile_commands.json ]; then
           echo "Running cppcheck in project mode using compile_commands.json"
+          # Build to ensure CMake AUTOGEN outputs exist, but we'll exclude them from analysis
+          cmake --build build -j2
           cppcheck \
             --enable=all \
             --error-exitcode=1 \
@@ -97,6 +99,7 @@ jobs:
             --suppress=unusedFunction \
             --suppress=missingIncludeSystem \
             -i .git -i build -i reports \
+            -i "**/_autogen/**" -i "**/moc_*.cpp" -i "**/qrc_*.cpp" -i "**/mocs_compilation.cpp" \
             -I src -I src/QtSuperMacros \
             --project=build/compile_commands.json
         else

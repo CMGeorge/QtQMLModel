@@ -21,6 +21,11 @@ EXCLUDES=(
   -i "${ROOT_DIR}/build"
   -i "${ROOT_DIR}/build-*"
   -i "${ROOT_DIR}/reports"
+  # Exclude Qt autogen and generated sources
+  -i "${ROOT_DIR}/**/_autogen/**"
+  -i "${ROOT_DIR}/**/mocs_compilation.cpp"
+  -i "${ROOT_DIR}/**/moc_*.cpp"
+  -i "${ROOT_DIR}/**/qrc_*.cpp"
 )
 
 # User-provided Qt macro neutralizations and useful options
@@ -43,6 +48,11 @@ DEFINES=(
 SUPPRESS=(
   --suppress=unusedFunction
   --suppress=missingIncludeSystem
+  # Suppress all findings in Qt-generated sources
+  --suppress=*:*/_autogen/*
+  --suppress=*:*/mocs_compilation.cpp
+  --suppress=*:*/moc_*.cpp
+  --suppress=*:*/qrc_*.cpp
 )
 
 # Build the command
