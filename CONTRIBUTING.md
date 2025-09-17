@@ -180,7 +180,7 @@ The project includes special configuration for cppcheck to properly handle Qt-sp
 ./scripts/build.sh lint
 
 # Manual cppcheck with Qt support
-cppcheck --enable=all --define=slots= --define=signals=public --define=Q_OBJECT= src/
+cppcheck --enable=all -Dslots= -Dsignals=public -DQ_OBJECT= src/
 ```
 
 **CI/CD Integration:**

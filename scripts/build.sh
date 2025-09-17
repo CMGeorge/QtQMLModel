@@ -75,19 +75,19 @@ run_lint() {
     
     echo "Running cppcheck..."
     cppcheck --enable=all --error-exitcode=0 --inline-suppr \
-        --define=slots= \
-        --define=signals=public \
-        --define=Q_OBJECT= \
-        --define=Q_SIGNALS=public \
-        --define=Q_SLOTS= \
-        --define=Q_EMIT= \
-        --define="Q_PROPERTY(x)=" \
-        --define=Q_NULLPTR=nullptr \
-        --define=QQML_EXPORT= \
-        --define="MAKE_GETTER_NAME(name)=get##name" \
-        --define="QML_WRITABLE_AUTO_PROPERTY(type,name)=" \
-        --define="QML_READONLY_AUTO_PROPERTY(type,name)=" \
-        --define="QML_CONSTANT_AUTO_PROPERTY(type,name)=" \
+        -Dslots= \
+        -Dsignals=public \
+        -DQ_OBJECT= \
+        -DQ_SIGNALS=public \
+        -DQ_SLOTS= \
+        -DQ_EMIT= \
+        -D"Q_PROPERTY(x)=" \
+        -DQ_NULLPTR=nullptr \
+        -DQQML_EXPORT= \
+        -D"MAKE_GETTER_NAME(name)=get##name" \
+        -D"QML_WRITABLE_AUTO_PROPERTY(type,name)=" \
+        -D"QML_READONLY_AUTO_PROPERTY(type,name)=" \
+        -D"QML_CONSTANT_AUTO_PROPERTY(type,name)=" \
         --suppress=missingIncludeSystem \
         --suppress=unusedFunction \
         src/ || true

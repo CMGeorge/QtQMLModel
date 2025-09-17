@@ -57,16 +57,16 @@ The project configures cppcheck to recognize Qt keywords and macros through `--d
 # Manual cppcheck with Qt support
 cppcheck \
   --enable=all \
-  --define=slots= \
-  --define=signals=public \
-  --define=Q_OBJECT= \
-  --define=Q_SIGNALS=public \
-  --define=Q_SLOTS= \
-  --define=Q_EMIT= \
-  --define="Q_PROPERTY(x)=" \
-  --define=Q_NULLPTR=nullptr \
-  --define=QQML_EXPORT= \
-  --define="MAKE_GETTER_NAME(name)=get##name" \
+  -Dslots= \
+  -Dsignals=public \
+  -DQ_OBJECT= \
+  -DQ_SIGNALS=public \
+  -DQ_SLOTS= \
+  -DQ_EMIT= \
+  -D"Q_PROPERTY(x)=" \
+  -DQ_NULLPTR=nullptr \
+  -DQQML_EXPORT= \
+  -D"MAKE_GETTER_NAME(name)=get##name" \
   src/
 ```
 
@@ -81,8 +81,8 @@ The GitHub Actions workflow (`.github/workflows/ci.yml`) includes the same confi
       --enable=all \
       --error-exitcode=1 \
       --inline-suppr \
-      --define=slots= \
-      --define=signals=public \
+      -Dslots= \
+      -Dsignals=public \
       # ... (full configuration)
       src/
 ```
@@ -101,7 +101,7 @@ For a new Qt macro `Q_CUSTOM_MACRO(x)`:
 
 ```bash
 # Add to both build script and CI workflow
---define="Q_CUSTOM_MACRO(x)="
+-D"Q_CUSTOM_MACRO(x)="
 ```
 
 ## Suppressed Warnings
