@@ -169,6 +169,36 @@ public:
 
 ### Code Quality Tools
 
+This project includes automated quality control through git hooks:
+
+#### Pre-commit Hook (Automatic)
+Runs on every `git commit` and checks:
+- ✅ Code formatting (clang-format)
+- ✅ Build verification 
+- ✅ Complete test suite
+- ✅ Static analysis (cppcheck)
+
+#### Pre-push Hook (Automatic)
+Runs on every `git push` and performs:
+- ✅ Full clean build
+- ✅ Comprehensive testing
+- ✅ Complete static analysis
+- ✅ Code formatting verification
+- ✅ TODO/FIXME reporting
+
+#### Setup
+```bash
+# Install git hooks (run once)
+./scripts/setup-dev.sh
+
+# Manual quality checks
+./scripts/build.sh format  # Fix formatting
+./scripts/build.sh lint    # Run static analysis
+./scripts/build.sh test    # Run tests
+```
+
+The git hooks automatically ensure code quality and prevent broken commits from being pushed.
+
 The project uses several tools to maintain code quality:
 
 - **clang-format**: Code formatting (configured in `.clang-format`)
