@@ -41,6 +41,8 @@ class TestObject : public QObject {
 
 class TestQQmlObjectListModel : public QObject {
     Q_OBJECT
+    public:
+        TestQQmlObjectListModel() : model(nullptr) {}
 
   private slots:
     void initTestCase();
@@ -61,8 +63,8 @@ class TestQQmlObjectListModel : public QObject {
     void testData();
     void testSignals();
 
-  private:
-    QQmlObjectListModel<TestObject> *model;
+    private:
+        QQmlObjectListModel<TestObject> *model;
 };
 
 void TestQQmlObjectListModel::initTestCase() {
@@ -217,4 +219,5 @@ void TestQQmlObjectListModel::testSignals() {
 }
 
 QTEST_MAIN(TestQQmlObjectListModel)
+// cppcheck-suppress missingInclude
 #include "test_qqmlobjectlistmodel.moc"

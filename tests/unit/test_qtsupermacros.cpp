@@ -11,12 +11,10 @@ class TestPropertyClass : public QObject {
     QML_READONLY_AUTO_PROPERTY(int, readonlyProp)
     QML_CONSTANT_AUTO_PROPERTY(bool, constantProp)
 
-  public:
-    explicit TestPropertyClass(QObject *parent = nullptr) : QObject(parent) {
-        m_writableProp = QString("initial");
-        m_readonlyProp = 42;
-        m_constantProp = true;
-    }
+    public:
+        explicit TestPropertyClass(QObject *parent = nullptr)
+                : QObject(parent), m_writableProp(QString("initial")), m_readonlyProp(42),
+                    m_constantProp(true) {}
 
     // For readonly property, we need to provide a way to update it
     void updateReadonly(int value) { update_readonlyProp(value); }
@@ -88,4 +86,5 @@ void TestQtSuperMacros::testConstantProperty() {
 }
 
 QTEST_MAIN(TestQtSuperMacros)
+// cppcheck-suppress missingInclude
 #include "test_qtsupermacros.moc"

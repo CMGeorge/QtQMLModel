@@ -158,13 +158,13 @@ class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase
     ItemType *getByUid(const QString &uid) const {
         return (!m_indexByUid.isEmpty() ? m_indexByUid.value(uid, Q_NULLPTR) : Q_NULLPTR);
     }
-    int roleForName(const QByteArray &name) const { return m_roles.key(name, -1); }
-    int count(void) const { return m_count; }
-    int size(void) const { return m_count; }
-    bool isEmpty(void) const { return m_items.isEmpty(); }
+    int roleForName(const QByteArray &name) const override { return m_roles.key(name, -1); }
+    int count(void) const override { return m_count; }
+    int size(void) const override { return m_count; }
+    bool isEmpty(void) const override { return m_items.isEmpty(); }
     bool contains(ItemType *item) const { return m_items.contains(item); }
     int indexOf(ItemType *item) const { return m_items.indexOf(item); }
-    void clear(void) {
+    void clear(void) override {
         if (!m_items.isEmpty()) {
             beginRemoveRows(noParent(), 0, m_items.count() - 1);
             FOREACH_PTR_IN_QLIST(ItemType, item, m_items) {
@@ -244,7 +244,7 @@ class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase
             endInsertRows();
         }
     }
-    void move(int idx, int pos) {
+    void move(int idx, int pos) override {
         if (idx != pos && idx >= 0 && pos >= 0 && idx < m_items.size() && pos < m_items.size()) {
             itemAboutToBeMoved(m_items.at(idx), idx, pos);
             beginMoveRows(noParent(), idx, idx, noParent(), (idx < pos ? pos + 1 : pos));
@@ -259,7 +259,7 @@ class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase
             remove(idx);
         }
     }
-    void remove(int idx) {
+    void remove(int idx) override {
         if (idx >= 0 && idx < m_items.size()) {
             beginRemoveRows(noParent(), idx, idx);
             ItemType *item = m_items.takeAt(idx);
@@ -273,18 +273,18 @@ class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase
     const QList<ItemType *> &toList(void) const { return m_items; }
 
   public: // QML slots implementation
-    void append(QObject *item) { append(qobject_cast<ItemType *>(item)); }
-    void prepend(QObject *item) { prepend(qobject_cast<ItemType *>(item)); }
-    void insert(int idx, QObject *item) { insert(idx, qobject_cast<ItemType *>(item)); }
-    void remove(QObject *item) { remove(qobject_cast<ItemType *>(item)); }
-    bool contains(QObject *item) const { return contains(qobject_cast<ItemType *>(item)); }
-    int indexOf(QObject *item) const { return indexOf(qobject_cast<ItemType *>(item)); }
+    void append(QObject *item) override { append(qobject_cast<ItemType *>(item)); }
+    void prepend(QObject *item) override { prepend(qobject_cast<ItemType *>(item)); }
+    void insert(int idx, QObject *item) override { insert(idx, qobject_cast<ItemType *>(item)); }
+    void remove(QObject *item) override { remove(qobject_cast<ItemType *>(item)); }
+    bool contains(QObject *item) const override { return contains(qobject_cast<ItemType *>(item)); }
+    int indexOf(QObject *item) const override { return indexOf(qobject_cast<ItemType *>(item)); }
     int indexOf(const QString &uid) const { return indexOf(get(uid)); }
-    QObject *get(int idx) const { return static_cast<QObject *>(at(idx)); }
-    QObject *get(const QString &uid) const { return static_cast<QObject *>(getByUid(uid)); }
-    QObject *getFirst(void) const { return static_cast<QObject *>(first()); }
-    QObject *getLast(void) const { return static_cast<QObject *>(last()); }
-    QVariantList toVarArray(void) const { return qListToVariant<ItemType *>(m_items); }
+    QObject *get(int idx) const override { return static_cast<QObject *>(at(idx)); }
+    QObject *get(const QString &uid) const override { return static_cast<QObject *>(getByUid(uid)); }
+    QObject *getFirst(void) const override { return static_cast<QObject *>(first()); }
+    QObject *getLast(void) const override { return static_cast<QObject *>(last()); }
+    QVariantList toVarArray(void) const override { return qListToVariant<ItemType *>(m_items); }
 
   protected: // internal stuff
     static const QString &emptyStr(void) {
@@ -303,7 +303,7 @@ class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase
         static const int ret = Qt::UserRole;
         return ret;
     }
-    int rowCount(const QModelIndex &parent = QModelIndex()) const {
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override {
         return (!parent.isValid() ? m_items.count() : 0);
     }
     void referenceItem(ItemType *item) {
@@ -346,7 +346,7 @@ class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase
             }
         }
     }
-    void onItemPropertyChanged(void) {
+    void onItemPropertyChanged(void) override {
         ItemType *item = qobject_cast<ItemType *>(sender());
         const int row = m_items.indexOf(item);
         const int sig = senderSignalIndex();

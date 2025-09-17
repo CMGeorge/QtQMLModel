@@ -131,6 +131,8 @@ class _QmlVarProperty_ : public QObject {
     QML_WRITABLE_VAR_PROPERTY(int, var1)
     QML_READONLY_VAR_PROPERTY(bool, var2)
     QML_CONSTANT_VAR_PROPERTY(QString, var3)
+  public:
+    _QmlVarProperty_() : QObject(nullptr), m_var1(0), m_var2(false), m_var3(QString()) {}
 };
 
 #endif // QQMLVARPROPERTYHELPERS

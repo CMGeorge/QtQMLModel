@@ -71,26 +71,39 @@ jobs:
     
     - name: Cppcheck
       run: |
-        cppcheck \
-          --enable=all \
-          --error-exitcode=1 \
-          --inline-suppr \
-          -Dslots= \
-          -Dsignals=public \
-          -DQ_OBJECT= \
-          -DQ_SIGNALS=public \
-          -DQ_SLOTS= \
-          -DQ_EMIT= \
-          -D"Q_PROPERTY(x)=" \
-          -DQ_NULLPTR=nullptr \
-          -DQQML_EXPORT= \
-          -D"MAKE_GETTER_NAME(name)=get##name" \
-          -D"QML_WRITABLE_AUTO_PROPERTY(type,name)=" \
-          -D"QML_READONLY_AUTO_PROPERTY(type,name)=" \
-          -D"QML_CONSTANT_AUTO_PROPERTY(type,name)=" \
-          --suppress=unusedFunction \
-          --suppress=missingIncludeSystem \
-          src/
+        set -e
+        if [ -f build/compile_commands.json ]; then
+          echo "Running cppcheck in project mode using compile_commands.json"
+          cppcheck \
+            --enable=all \
+            --error-exitcode=1 \
+            --inline-suppr \
+            --library=qt \
+            --std=c++17 \
+            --language=c++ \
+            -Dslots= \
+            -Dsignals=public \
+            -DQ_OBJECT= \
+            -DQ_SIGNALS=public \
+            -DQ_SLOTS= \
+            -DQ_EMIT= \
+            -D"Q_PROPERTY(x)=" \
+            -DQ_NULLPTR=nullptr \
+            -DQQML_EXPORT= \
+            -D"MAKE_GETTER_NAME(name)=get##name" \
+            -D"QML_WRITABLE_AUTO_PROPERTY(type,name)=" \
+            -D"QML_READONLY_AUTO_PROPERTY(type,name)=" \
+            -D"QML_CONSTANT_AUTO_PROPERTY(type,name)=" \
+            --suppress=unusedFunction \
+            --suppress=missingIncludeSystem \
+            -i .git -i build -i reports \
+            -I src -I src/QtSuperMacros \
+            --project=build/compile_commands.json
+        else
+          echo "compile_commands.json not found. Falling back to repository script."
+          chmod +x scripts/cppcheck.sh
+          ./scripts/cppcheck.sh
+        fi
     
     - name: Generate documentation
       run: |

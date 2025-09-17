@@ -70,6 +70,8 @@ class _QmlCstRefProperty_ : public QObject {
     QML_WRITABLE_CSTREF_PROPERTY(int, var1)
     QML_READONLY_CSTREF_PROPERTY(bool, var2)
     QML_CONSTANT_CSTREF_PROPERTY(QString, var3)
+  public:
+    _QmlCstRefProperty_() : QObject(nullptr), m_var1(0), m_var2(false), m_var3(QString()) {}
 };
 
 #endif // QQMLCONSTREFPROPERTYHELPERS

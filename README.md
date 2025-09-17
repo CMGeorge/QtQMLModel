@@ -170,6 +170,16 @@ The project uses several tools to maintain code quality:
 - **clang-format**: Code formatting (configured in `.clang-format`)
 - **clang-tidy**: Static analysis (configured in `.clang-tidy`)
 - **cppcheck**: Additional static analysis with Qt support (see `docs/CPPCHECK_QT_CONFIG.md`)
+
+#### Running Cppcheck locally
+
+You can run Qt-aware Cppcheck over the project sources with:
+
+```bash
+./scripts/cppcheck.sh
+```
+
+This writes both a human-readable and XML report to `reports/` and returns non-zero on issues. The script config neutralizes common Qt macros (slots, signals, Q_OBJECT, etc.) and loads the `qt` library knowledge for better analysis.
 - **Doxygen**: API documentation generation
 
 ### Contributing

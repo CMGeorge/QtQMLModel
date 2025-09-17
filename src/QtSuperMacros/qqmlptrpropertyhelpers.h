@@ -70,6 +70,8 @@ class _QmlPtrProperty_ : public QObject {
     QML_WRITABLE_PTR_PROPERTY(int, var1)
     QML_READONLY_PTR_PROPERTY(bool, var2)
     QML_CONSTANT_PTR_PROPERTY(QString, var3)
+  public:
+    _QmlPtrProperty_() : QObject(nullptr), m_var1(Q_NULLPTR), m_var2(Q_NULLPTR), m_var3(Q_NULLPTR) {}
 };
 
 #endif // QQMLPTRPROPERTYHELPERS

@@ -5,6 +5,8 @@
 
 class TestQQmlVariantListModel : public QObject {
     Q_OBJECT
+    public:
+        TestQQmlVariantListModel() : model(nullptr) {}
 
   private slots:
     void initTestCase();
@@ -27,8 +29,8 @@ class TestQQmlVariantListModel : public QObject {
     void testSignals();
     void testRoles();
 
-  private:
-    QQmlVariantListModel *model;
+    private:
+        QQmlVariantListModel *model;
 };
 
 void TestQQmlVariantListModel::initTestCase() {
@@ -198,4 +200,5 @@ void TestQQmlVariantListModel::testRoles() {
 }
 
 QTEST_MAIN(TestQQmlVariantListModel)
+// cppcheck-suppress missingInclude
 #include "test_qqmlvariantlistmodel.moc"
