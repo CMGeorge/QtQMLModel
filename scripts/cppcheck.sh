@@ -53,6 +53,7 @@ SUPPRESS=(
   --suppress=*:*/mocs_compilation.cpp
   --suppress=*:*/moc_*.cpp
   --suppress=*:*/qrc_*.cpp
+  --suppress=*:*.moc
 )
 
 # Build the command

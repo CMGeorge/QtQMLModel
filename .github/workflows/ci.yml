@@ -98,6 +98,8 @@ jobs:
             -D"QML_CONSTANT_AUTO_PROPERTY(type,name)=" \
             --suppress=unusedFunction \
             --suppress=missingIncludeSystem \
+            --suppress='*:*/_autogen/*' \
+            --suppress='*:*.moc' \
             -i .git -i build -i reports \
             -i "**/_autogen/**" -i "**/moc_*.cpp" -i "**/qrc_*.cpp" -i "**/mocs_compilation.cpp" \
             -I src -I src/QtSuperMacros \
