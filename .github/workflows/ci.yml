@@ -92,15 +92,16 @@ jobs:
         arch: ${{ matrix.qt-arch }}
         cache: true
     
-    - name: Install Qt Desktop (for cross-compilation host tools)
-      if: startsWith(matrix.platform, 'android') || startsWith(matrix.platform, 'ios')
+    - name: Install Qt Desktop (for cross-compilation)
+      if: matrix.qt-target != 'desktop'
       uses: jurplel/install-qt-action@v3
       with:
         version: '6.7.2'
-        target: 'desktop'
-        arch: ${{ runner.os == 'macos-latest' && 'clang_64' || 'gcc_64' }}
+        target: desktop
+        arch: linux_gcc_64
         cache: true
-        dir: '${{ github.workspace }}/Qt-Desktop'
+        dir: ${{ github.workspace }}/Qt-Desktop
+        install-deps: 'true'
 
     - name: Configure CMake for ${{ matrix.platform }}
       run: |
@@ -109,7 +110,7 @@ jobs:
           if [[ "${{ runner.os }}" == "macOS" ]]; then
             export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/clang_64"
           else
-            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/gcc_64"
+            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/linux_gcc_64"
           fi
         fi
         
