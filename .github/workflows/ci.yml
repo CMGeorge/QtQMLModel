@@ -101,6 +101,7 @@ jobs:
             --suppress=missingIncludeSystem \
             -i .git -i build -i reports \
             -i "**/_autogen/**" -i "**/moc_*.cpp" -i "**/qrc_*.cpp" -i "**/mocs_compilation.cpp" \
+            -i "build/tests/unit/*_autogen/include/*.moc" \
             -I src -I src/QtSuperMacros \
             --project=build/compile_commands.json
         else
