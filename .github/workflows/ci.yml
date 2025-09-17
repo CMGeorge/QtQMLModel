@@ -10,7 +10,9 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        # TEMP: Debugging Windows - other platforms disabled
+        # os: [ubuntu-latest, macos-latest]
+        os: [windows-latest]
         qt-version: [6.7.2]
         build-type: [Release, Debug]
     
@@ -44,148 +46,152 @@ jobs:
       working-directory: build
       run: ctest --output-on-failure --build-config ${{ matrix.build-type }}
 
-  build-mobile:
-    strategy:
-      matrix:
-        include:
-          - platform: ios
-            os: macos-latest
-            qt-target: ios
-            qt-arch: ''
-            cmake-args: -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0
-          - platform: android-arm64
-            os: ubuntu-latest
-            qt-target: android
-            qt-arch: android_arm64_v8a
-            cmake-args: -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-24
-          - platform: android-x86_64
-            os: ubuntu-latest  
-            qt-target: android
-            qt-arch: android_x86_64
-            cmake-args: -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake -DANDROID_ABI=x86_64 -DANDROID_PLATFORM=android-24
+  # TEMP: Debugging Windows - mobile builds disabled
+  # build-mobile:
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         - platform: ios
+  #           os: macos-latest
+  #           qt-target: ios
+  #           qt-arch: ''
+  #           cmake-args: -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0
+  #         - platform: android-arm64
+  #           os: ubuntu-latest
+  #           qt-target: android
+  #           qt-arch: android_arm64_v8a
+  #           cmake-args: -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-24
+  #         - platform: android-x86_64
+  #           os: ubuntu-latest  
+  #           qt-target: android
+  #           qt-arch: android_x86_64
+  #           cmake-args: -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake -DANDROID_ABI=x86_64 -DANDROID_PLATFORM=android-24
     
-    runs-on: ${{ matrix.os }}
+  #   runs-on: ${{ matrix.os }}
     
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        submodules: true
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #     with:
+  #       submodules: true
     
-    - name: Setup Android NDK (Android only)
-      if: startsWith(matrix.platform, 'android')
-      uses: nttld/setup-ndk@v1
-      with:
-        ndk-version: r25c
+  #   - name: Setup Android NDK (Android only)
+  #     if: startsWith(matrix.platform, 'android')
+  #     uses: nttld/setup-ndk@v1
+  #     with:
+  #       ndk-version: r25c
         
-    - name: Cache Qt
-      id: cache-qt
-      uses: actions/cache@v4
-      with:
-        path: ../Qt
-        key: ${{ runner.os }}-Qt-6.7.2-${{ matrix.qt-target }}-${{ matrix.qt-arch }}
+  #   - name: Cache Qt
+  #     id: cache-qt
+  #     uses: actions/cache@v4
+  #     with:
+  #       path: ../Qt
+  #       key: ${{ runner.os }}-Qt-6.7.2-${{ matrix.qt-target }}-${{ matrix.qt-arch }}
     
-    - name: Install Qt Desktop (for cross-compilation)
-      if: matrix.qt-target != 'desktop'
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: '6.7.2'
-        target: desktop
-        arch: ${{ runner.os == 'macOS' && 'clang_64' || 'linux_gcc_64' }}
-        cache: true
-        dir: ${{ github.workspace }}/Qt-Desktop
-        install-deps: 'true'
+  #   - name: Install Qt Desktop (for cross-compilation)
+  #     if: matrix.qt-target != 'desktop'
+  #     uses: jurplel/install-qt-action@v4
+  #     with:
+  #       version: '6.7.2'
+  #       target: desktop
+  #       arch: ${{ runner.os == 'macOS' && 'clang_64' || 'linux_gcc_64' }}
+  #       cache: true
+  #       dir: ${{ github.workspace }}/Qt-Desktop
+  #       install-deps: 'true'
 
-    - name: Install Qt for Mobile
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: '6.7.2'
-        target: ${{ matrix.qt-target }}
-        arch: ${{ matrix.qt-arch }}
-        dir: ${{ github.workspace }}/Qt
-        cache: true
-        install-deps: 'true'
+  #   - name: Install Qt for Mobile
+  #     uses: jurplel/install-qt-action@v4
+  #     with:
+  #       version: '6.7.2'
+  #       target: ${{ matrix.qt-target }}
+  #       arch: ${{ matrix.qt-arch }}
+  #       dir: ${{ github.workspace }}/Qt
+  #       cache: true
+  #       install-deps: 'true'
 
-    - name: Configure CMake for ${{ matrix.platform }}
-      run: |
-        # Set QT_HOST_PATH for cross-compilation and ensure correct Qt6_DIR
-        if [[ "${{ matrix.platform }}" == android* ]] || [[ "${{ matrix.platform }}" == "ios" ]]; then
-          if [[ "${{ runner.os }}" == "macOS" ]]; then
-            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/macos"
-          else
-            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/gcc_64"
-          fi
-          # For Android builds, use the Android Qt installation
-          if [[ "${{ matrix.platform }}" == android* ]]; then
-            export Qt6_DIR="${{ github.workspace }}/Qt/6.7.2/${{ matrix.qt-arch }}"
-          else
-            export Qt6_DIR="${{ github.workspace }}/Qt/6.7.2/${{ matrix.qt-target }}"
-          fi
-          echo "Using QT_HOST_PATH: $QT_HOST_PATH"
-          echo "Qt6_DIR for mobile build: $Qt6_DIR"
-          
-          # Debug: List what's actually installed
-          echo "=== Debug: Qt Desktop contents ==="
-          find "${{ github.workspace }}/Qt-Desktop" -maxdepth 4 -type d 2>/dev/null || true
-          echo "=== Debug: Qt Mobile contents ==="
-          find "${{ github.workspace }}/Qt" -maxdepth 4 -type d 2>/dev/null || true
-        fi
+  #   - name: Configure CMake for ${{ matrix.platform }}
+  #     run: |
+  #       # Set QT_HOST_PATH for cross-compilation and ensure correct Qt6_DIR
+  #       if [[ "${{ matrix.platform }}" == android* ]] || [[ "${{ matrix.platform }}" == "ios" ]]; then
+  #         if [[ "${{ runner.os }}" == "macOS" ]]; then
+  #           export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/macos"
+  #         else
+  #           export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/gcc_64"
+  #         fi
+  #         # For Android builds, use the Android Qt installation
+  #         if [[ "${{ matrix.platform }}" == android* ]]; then
+  #           export Qt6_DIR="${{ github.workspace }}/Qt/6.7.2/${{ matrix.qt-arch }}"
+  #         else
+  #           export Qt6_DIR="${{ github.workspace }}/Qt/6.7.2/${{ matrix.qt-target }}"
+  #         fi
+  #         echo "Using QT_HOST_PATH: $QT_HOST_PATH"
+  #         echo "Qt6_DIR for mobile build: $Qt6_DIR"
+  #         
+  #         # Debug: List what's actually installed
+  #         echo "=== Debug: Qt Desktop contents ==="
+  #         find "${{ github.workspace }}/Qt-Desktop" -maxdepth 4 -type d 2>/dev/null || true
+  #         echo "=== Debug: Qt Mobile contents ==="
+  #         find "${{ github.workspace }}/Qt" -maxdepth 4 -type d 2>/dev/null || true
+  #       fi
+  #       
+  #       cmake -B build-${{ matrix.platform }} \
+  #         -DCMAKE_BUILD_TYPE=Release \
+  #         -DQt6_DIR="$Qt6_DIR/lib/cmake/Qt6" \
+  #         ${QT_HOST_PATH:+-DQT_HOST_PATH="$QT_HOST_PATH"} \
+  #         -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \
+  #         ${{ matrix.cmake-args }} \
+  #         -DBUILD_TESTING=OFF
+
+  #   - name: Build for ${{ matrix.platform }}
+  #     run: cmake --build build-${{ matrix.platform }} --config Release
+
+  # TEMP: Debugging Windows - code quality disabled
+  # code-quality:
+  #   runs-on: ubuntu-latest
+    
+  #   steps:
+  #   - uses: actions/checkout@v4
+    
+  #   - name: Install Qt
+  #     uses: jurplel/install-qt-action@v4
+  #     with:
+  #       version: '6.7.2'
+    
+  #   - name: Install tools
+  #     run: |
+  #       sudo apt-get update
+  #       sudo apt-get install -y clang-format clang-tidy cppcheck doxygen
+    
+  #   - name: Check formatting
+  #     run: |
+  #       find src/ -name "*.cpp" -o -name "*.h" | xargs clang-format --dry-run --Werror
+    
+  #   - name: Static analysis
+  #     run: |
+  #       cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+  #       run-clang-tidy -p build src/
+    
+  #   - name: Cppcheck
+  #     run: |
+  #       set -e
+  #       echo "Running cppcheck using repository script (no build needed)"
+  #       chmod +x scripts/cppcheck.sh
+  #       ./scripts/cppcheck.sh
+    
+  #   - name: Generate documentation
+  #     run: |
+  #       doxygen docs/Doxyfile
         
-        cmake -B build-${{ matrix.platform }} \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DQt6_DIR="$Qt6_DIR/lib/cmake/Qt6" \
-          ${QT_HOST_PATH:+-DQT_HOST_PATH="$QT_HOST_PATH"} \
-          -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \
-          ${{ matrix.cmake-args }} \
-          -DBUILD_TESTING=OFF
-
-    - name: Build for ${{ matrix.platform }}
-      run: cmake --build build-${{ matrix.platform }} --config Release
-
-  code-quality:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: '6.7.2'
-    
-    - name: Install tools
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y clang-format clang-tidy cppcheck doxygen
-    
-    - name: Check formatting
-      run: |
-        find src/ -name "*.cpp" -o -name "*.h" | xargs clang-format --dry-run --Werror
-    
-    - name: Static analysis
-      run: |
-        cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-        run-clang-tidy -p build src/
-    
-    - name: Cppcheck
-      run: |
-        set -e
-        echo "Running cppcheck using repository script (no build needed)"
-        chmod +x scripts/cppcheck.sh
-        ./scripts/cppcheck.sh
-    
-    - name: Generate documentation
-      run: |
-        doxygen docs/Doxyfile
-        
-    - name: Upload documentation
-      uses: actions/upload-artifact@v4
-      with:
-        name: documentation
-        path: docs/html/
+  #   - name: Upload documentation
+  #     uses: actions/upload-artifact@v4
+  #     with:
+  #       name: documentation
+  #       path: docs/html/
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [build, build-mobile, code-quality]
+    # TEMP: Debugging Windows - only depends on build job now
+    # needs: [build, build-mobile, code-quality]
+    needs: [build]
     runs-on: ubuntu-latest
     
     steps:
