@@ -103,6 +103,14 @@ jobs:
         dir: ${{ github.workspace }}/Qt-Desktop
         install-deps: 'true'
 
+    - name: Debug Qt installation paths
+      run: |
+        echo "Current Qt6_DIR: $Qt6_DIR"
+        echo "Contents of Qt-Desktop:"
+        find ${{ github.workspace }}/Qt-Desktop -type d -maxdepth 3 | head -20
+        echo "Contents of Qt installation:"
+        find ${{ github.workspace }}/Qt -type d -maxdepth 3 | head -20
+
     - name: Configure CMake for ${{ matrix.platform }}
       run: |
         # Set QT_HOST_PATH for cross-compilation
@@ -110,8 +118,10 @@ jobs:
           if [[ "${{ runner.os }}" == "macOS" ]]; then
             export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/clang_64"
           else
-            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/linux_gcc_64"
+            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/gcc_64"
           fi
+          echo "Using QT_HOST_PATH: $QT_HOST_PATH"
+          echo "Qt6_DIR for mobile build: $Qt6_DIR"
         fi
         
         cmake -B build-${{ matrix.platform }} \
