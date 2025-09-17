@@ -33,7 +33,7 @@ jobs:
       with:
         version: ${{ matrix.qt-version }}
         cache: true
-        modules: 'qtquick'
+        modules: 'qtqml'
     
     - name: Configure CMake
       run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
@@ -55,7 +55,7 @@ jobs:
       uses: jurplel/install-qt-action@v3
       with:
         version: '6.8.0'
-        modules: 'qtquick'
+        modules: 'qtqml'
     
     - name: Install tools
       run: |
@@ -97,7 +97,7 @@ jobs:
       uses: jurplel/install-qt-action@v3
       with:
         version: '6.8.0'
-        modules: 'qtquick'
+        modules: 'qtqml'
     
     - name: Build Release
       run: |
