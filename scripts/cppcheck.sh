@@ -48,12 +48,6 @@ DEFINES=(
 SUPPRESS=(
   --suppress=unusedFunction
   --suppress=missingIncludeSystem
-  # Suppress all findings in Qt-generated sources
-  --suppress=*:*/_autogen/*
-  --suppress=*:*/mocs_compilation.cpp
-  --suppress=*:*/moc_*.cpp
-  --suppress=*:*/qrc_*.cpp
-  --suppress=*:*.moc
 )
 
 # Build the command
