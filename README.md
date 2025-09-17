@@ -43,14 +43,18 @@ sudo apt install qt6-base-dev qt6-declarative-dev cmake build-essential
 
 ### Using in Your Project
 
-#### CMake Integration
+#### CMake Integration (Recommended)
+
+The primary and recommended way to integrate QtQMLModel is using CMake:
 
 ```cmake
 find_package(CPPQmlModels REQUIRED)
 target_link_libraries(your_target PRIVATE CPPQmlModels::CPPQmlModels)
 ```
 
-#### QMake Integration
+#### QMake Integration (Legacy)
+
+> **Note**: QMake files are preserved for compatibility but are not actively maintained. CMake is the recommended build system.
 
 ```qmake
 include(path/to/QtQMLModel.pri)

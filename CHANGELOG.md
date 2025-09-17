@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Professional project structure with proper export headers
 
 ### Changed
-- Migrated from QMake to modern CMake build system
+- Migrated to modern CMake as primary build system (QMake files preserved as legacy)
 - Updated CMakeLists.txt to support Qt6 and proper library installation
 - Improved .gitignore to exclude build artifacts
 - Enhanced project structure for better maintainability
