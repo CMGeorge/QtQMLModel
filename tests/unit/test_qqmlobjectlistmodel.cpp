@@ -41,8 +41,8 @@ class TestObject : public QObject {
 
 class TestQQmlObjectListModel : public QObject {
     Q_OBJECT
-    public:
-        TestQQmlObjectListModel() : model(nullptr) {}
+  public:
+    TestQQmlObjectListModel() : model(nullptr) {}
 
   private slots:
     void initTestCase();
@@ -63,8 +63,8 @@ class TestQQmlObjectListModel : public QObject {
     void testData();
     void testSignals();
 
-    private:
-        QQmlObjectListModel<TestObject> *model;
+  private:
+    QQmlObjectListModel<TestObject> *model;
 };
 
 void TestQQmlObjectListModel::initTestCase() {

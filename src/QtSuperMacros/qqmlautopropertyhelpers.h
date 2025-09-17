@@ -78,18 +78,11 @@ class _Test_QmlAutoProperty_ : public QObject {
     QML_CONSTANT_AUTO_PROPERTY(bool, var7)
     QML_CONSTANT_AUTO_PROPERTY(QString, var8)
     QML_CONSTANT_AUTO_PROPERTY(QObject *, var9)
-public:
-  _Test_QmlAutoProperty_()
-    : QObject(nullptr),
-      m_var1(false),
-      m_var2(QString()),
-      m_var3(Q_NULLPTR),
-      m_var4(false),
-      m_var5(QString()),
-      m_var6(Q_NULLPTR),
-      m_var7(false),
-      m_var8(QString()),
-      m_var9(Q_NULLPTR) {}
+  public:
+    _Test_QmlAutoProperty_()
+        : QObject(nullptr), m_var1(false), m_var2(QString()), m_var3(Q_NULLPTR), m_var4(false),
+          m_var5(QString()), m_var6(Q_NULLPTR), m_var7(false), m_var8(QString()),
+          m_var9(Q_NULLPTR) {}
 };
 
 #endif // QQMLAUTOPROPERTYHELPERS_H
