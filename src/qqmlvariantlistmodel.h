@@ -21,7 +21,7 @@ class QQMLMODELS_EXPORT QQmlVariantListModel : public QAbstractListModel {
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames(void) const override;
 
-  public Q_SLOTS: // public API
+  public slots: // public API
     void clear(void);
     int count(void) const;
     bool isEmpty(void) const;

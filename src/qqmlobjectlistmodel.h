@@ -50,7 +50,7 @@ class QQMLMODELS_EXPORT QQmlObjectListModelBase
   public:
     explicit QQmlObjectListModelBase(QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
 
-  public Q_SLOTS: // virtual methods API for QML
+  public slots: // virtual methods API for QML
     virtual int size(void) const = 0;
     virtual int count(void) const = 0;
     virtual bool isEmpty(void) const = 0;
@@ -70,7 +70,7 @@ class QQMLMODELS_EXPORT QQmlObjectListModelBase
     virtual QObject *getLast(void) const = 0;
     virtual QVariantList toVarArray(void) const = 0;
 
-  protected Q_SLOTS: // internal callback
+  protected slots: // internal callback
     virtual void onItemPropertyChanged(void) = 0;
 
   Q_SIGNALS: // notifier
