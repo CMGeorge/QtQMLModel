@@ -38,12 +38,7 @@ qt_add_library(CPPQmlModels SHARED
     src/QtSuperMacros/qqmlvarpropertyhelpers.h
 )
 
-# Generate export header
-generate_export_header(CPPQmlModels
-    BASE_NAME CPPQmlModels
-    EXPORT_FILE_NAME src/cppqmlmodels_export.h
-)
-
+# Define that we are building the library (for export macros)
 add_definitions(-DQQML_EXPORT)
 
 target_include_directories(CPPQmlModels
