@@ -72,43 +72,9 @@ jobs:
     - name: Cppcheck
       run: |
         set -e
-        if [ -f build/compile_commands.json ]; then
-          echo "Running cppcheck in project mode using compile_commands.json"
-          # Build to ensure CMake AUTOGEN outputs exist, but we'll exclude them from analysis
-          cmake --build build -j2
-          cppcheck \
-            --enable=all \
-            --error-exitcode=1 \
-            --inline-suppr \
-            --library=qt \
-            --std=c++17 \
-            --language=c++ \
-            -Dslots= \
-            -Dsignals=public \
-            -DQ_OBJECT= \
-            -DQ_SIGNALS=public \
-            -DQ_SLOTS= \
-            -DQ_EMIT= \
-            -D"Q_PROPERTY(x)=" \
-            -DQ_NULLPTR=nullptr \
-            -DQQML_EXPORT= \
-            -DQ_MOC_INCLUDE \
-            -D"MAKE_GETTER_NAME(name)=get##name" \
-            -D"QML_WRITABLE_AUTO_PROPERTY(type,name)=" \
-            -D"QML_READONLY_AUTO_PROPERTY(type,name)=" \
-            -D"QML_CONSTANT_AUTO_PROPERTY(type,name)=" \
-            --suppress=unusedFunction \
-            --suppress=missingIncludeSystem \
-            -i .git -i build -i reports \
-            -i "**/_autogen/**" -i "**/moc_*.cpp" -i "**/qrc_*.cpp" -i "**/mocs_compilation.cpp" \
-            -i "build/tests/unit/*_autogen/include/*.moc" \
-            -I src -I src/QtSuperMacros \
-            --project=build/compile_commands.json
-        else
-          echo "compile_commands.json not found. Falling back to repository script."
-          chmod +x scripts/cppcheck.sh
-          ./scripts/cppcheck.sh
-        fi
+        echo "Running cppcheck using repository script (no build needed)"
+        chmod +x scripts/cppcheck.sh
+        ./scripts/cppcheck.sh
     
     - name: Generate documentation
       run: |

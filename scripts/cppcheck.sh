@@ -26,8 +26,6 @@ EXCLUDES=(
   -i "${ROOT_DIR}/**/mocs_compilation.cpp"
   -i "${ROOT_DIR}/**/moc_*.cpp"
   -i "${ROOT_DIR}/**/qrc_*.cpp"
-  # Exclude specific autogen include directories that contain problematic moc headers
-  -i "${ROOT_DIR}/build/tests/unit/*_autogen/include/*.moc"
 )
 
 # User-provided Qt macro neutralizations and useful options
