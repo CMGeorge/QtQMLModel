@@ -29,7 +29,7 @@ jobs:
         key: ${{ runner.os }}-Qt-${{ matrix.qt-version }}
     
     - name: Install Qt
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
         version: ${{ matrix.qt-version }}
         cache: true
@@ -84,17 +84,9 @@ jobs:
         path: ../Qt
         key: ${{ runner.os }}-Qt-6.7.2-${{ matrix.qt-target }}-${{ matrix.qt-arch }}
     
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: '6.7.2'
-        target: ${{ matrix.qt-target }}
-        arch: ${{ matrix.qt-arch }}
-        cache: true
-    
     - name: Install Qt Desktop (for cross-compilation)
       if: matrix.qt-target != 'desktop'
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
         version: '6.7.2'
         target: desktop
@@ -103,15 +95,15 @@ jobs:
         dir: ${{ github.workspace }}/Qt-Desktop
         install-deps: 'true'
 
-    - name: Install Qt for Android
-      if: startsWith(matrix.platform, 'android')
+    - name: Install Qt for Mobile
       uses: jurplel/install-qt-action@v4
       with:
         version: '6.7.2'
-        target: 'android'
-        arch: '${{ matrix.platform }}'
-        dir: '${{ github.workspace }}/Qt'
+        target: ${{ matrix.qt-target }}
+        arch: ${{ matrix.qt-arch }}
+        dir: ${{ github.workspace }}/Qt
         cache: true
+        install-deps: 'true'
 
     - name: Configure CMake for ${{ matrix.platform }}
       run: |
@@ -124,10 +116,18 @@ jobs:
           fi
           # For Android builds, use the Android Qt installation
           if [[ "${{ matrix.platform }}" == android* ]]; then
-            export Qt6_DIR="${{ github.workspace }}/Qt/6.7.2/${{ matrix.platform }}"
+            export Qt6_DIR="${{ github.workspace }}/Qt/6.7.2/${{ matrix.qt-arch }}"
+          else
+            export Qt6_DIR="${{ github.workspace }}/Qt/6.7.2/${{ matrix.qt-target }}"
           fi
           echo "Using QT_HOST_PATH: $QT_HOST_PATH"
           echo "Qt6_DIR for mobile build: $Qt6_DIR"
+          
+          # Debug: List what's actually installed
+          echo "=== Debug: Qt Desktop contents ==="
+          find "${{ github.workspace }}/Qt-Desktop" -maxdepth 4 -type d 2>/dev/null || true
+          echo "=== Debug: Qt Mobile contents ==="
+          find "${{ github.workspace }}/Qt" -maxdepth 4 -type d 2>/dev/null || true
         fi
         
         cmake -B build-${{ matrix.platform }} \
@@ -148,7 +148,7 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Install Qt
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
         version: '6.7.2'
     
