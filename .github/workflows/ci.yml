@@ -110,9 +110,9 @@ jobs:
         # Set QT_HOST_PATH for cross-compilation and ensure correct Qt6_DIR
         if [[ "${{ matrix.platform }}" == android* ]] || [[ "${{ matrix.platform }}" == "ios" ]]; then
           if [[ "${{ runner.os }}" == "macOS" ]]; then
-            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/clang_64"
+            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/macos"
           else
-            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/gcc_64"
+            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/linux_gcc_64"
           fi
           # For Android builds, use the Android Qt installation
           if [[ "${{ matrix.platform }}" == android* ]]; then
