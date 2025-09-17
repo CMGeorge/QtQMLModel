@@ -92,13 +92,35 @@ jobs:
         arch: ${{ matrix.qt-arch }}
         cache: true
     
+    - name: Install Qt Desktop (for cross-compilation host tools)
+      if: startsWith(matrix.platform, 'android') || startsWith(matrix.platform, 'ios')
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.7.2'
+        target: 'desktop'
+        arch: ${{ runner.os == 'macos-latest' && 'clang_64' || 'gcc_64' }}
+        cache: true
+        dir: '${{ github.workspace }}/Qt-Desktop'
+
     - name: Configure CMake for ${{ matrix.platform }}
       run: |
+        # Set QT_HOST_PATH for cross-compilation
+        if [[ "${{ matrix.platform }}" == android* ]] || [[ "${{ matrix.platform }}" == "ios" ]]; then
+          if [[ "${{ runner.os }}" == "macOS" ]]; then
+            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/clang_64"
+          else
+            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/gcc_64"
+          fi
+        fi
+        
         cmake -B build-${{ matrix.platform }} \
           -DCMAKE_BUILD_TYPE=Release \
+          -DQt6_DIR="$Qt6_DIR/lib/cmake/Qt6" \
+          ${QT_HOST_PATH:+-DQT_HOST_PATH="$QT_HOST_PATH"} \
+          -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \
           ${{ matrix.cmake-args }} \
           -DBUILD_TESTING=OFF
-    
+
     - name: Build for ${{ matrix.platform }}
       run: cmake --build build-${{ matrix.platform }} --config Release
 
