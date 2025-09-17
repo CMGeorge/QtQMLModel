@@ -30,3 +30,7 @@ build_5_15
 build/
 CMakeFiles/
 CMakeCache.txt
+docs/html/
+docs/latex/
+*.log
+.DS_Store
