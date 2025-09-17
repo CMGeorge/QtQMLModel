@@ -23,6 +23,7 @@ class TestQQmlVariantListModel : public QObject {
     void testGet();
     void testReplace();
     void testMove();
+    void testSwap();
     void testAppendList();
     void testPrependList();
     void testInsertList();
@@ -137,6 +138,19 @@ void TestQQmlVariantListModel::testMove() {
     QCOMPARE(model->count(), 3);
     QCOMPARE(model->get(0).toString(), QString("second"));
     QCOMPARE(model->get(1).toString(), QString("third"));
+    QCOMPARE(model->get(2).toString(), QString("first"));
+}
+
+void TestQQmlVariantListModel::testSwap() {
+    model->append(QVariant("first"));
+    model->append(QVariant("second"));
+    model->append(QVariant("third"));
+
+    model->swap(0, 2); // Swap first and third
+
+    QCOMPARE(model->count(), 3);
+    QCOMPARE(model->get(0).toString(), QString("third"));
+    QCOMPARE(model->get(1).toString(), QString("second"));
     QCOMPARE(model->get(2).toString(), QString("first"));
 }
 

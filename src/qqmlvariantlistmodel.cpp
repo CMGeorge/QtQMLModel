@@ -38,6 +38,7 @@
 QQmlVariantListModel::QQmlVariantListModel(QObject *parent)
     : QAbstractListModel(parent), m_count(0), m_items(), m_roles() {
     m_roles.insert(BASE_ROLE, QByteArrayLiteral("qtVariant"));
+    m_roles.insert(Qt::DisplayRole, QByteArrayLiteral("display"));
 }
 
 /*!
@@ -69,7 +70,7 @@ int QQmlVariantListModel::rowCount(const QModelIndex &parent) const {
 QVariant QQmlVariantListModel::data(const QModelIndex &index, int role) const {
     QVariant ret;
     int idx = index.row();
-    if (idx >= 0 && idx < count() && role == BASE_ROLE) {
+    if (idx >= 0 && idx < count() && (role == BASE_ROLE || role == Qt::DisplayRole)) {
         ret = m_items.value(idx);
     }
     return ret;
@@ -232,6 +233,7 @@ void QQmlVariantListModel::prependList(const QVariantList &itemList) {
         int offset = 0;
         foreach (QVariant item, itemList) {
             m_items.insert(offset, item);
+            offset++; // Insert each subsequent item after the previous one
         }
         endInsertRows();
         updateCounter();
@@ -267,12 +269,33 @@ void QQmlVariantListModel::insertList(int idx, const QVariantList &itemList) {
 */
 void QQmlVariantListModel::move(int idx, int pos) {
     if (idx != pos) {
-        const int lowest = qMin(idx, pos);
-        const int highest = qMax(idx, pos);
-        beginMoveRows(NO_PARENT, highest, highest, NO_PARENT, lowest);
-
-        m_items.move(highest, lowest);
+        // Qt's beginMoveRows expects the destination index based on the state BEFORE the move
+        // When moving from lower to higher index, use pos + 1
+        // When moving from higher to lower index, use pos
+        int destination = (idx < pos) ? pos + 1 : pos;
+        beginMoveRows(NO_PARENT, idx, idx, NO_PARENT, destination);
+        
+        m_items.move(idx, pos);
         endMoveRows();
+    }
+}
+
+/*!
+    \details Swaps two items in the model.
+
+    \param idx1 The position of the first item
+    \param idx2 The position of the second item
+*/
+void QQmlVariantListModel::swap(int idx1, int idx2) {
+    if (idx1 != idx2 && idx1 >= 0 && idx1 < m_items.size() && idx2 >= 0 && idx2 < m_items.size()) {
+        m_items.swapItemsAt(idx1, idx2);
+        
+        // Emit dataChanged for both positions
+        QModelIndex index1 = QAbstractListModel::index(idx1, 0, NO_PARENT);
+        QModelIndex index2 = QAbstractListModel::index(idx2, 0, NO_PARENT);
+        
+        emit dataChanged(index1, index1, QVector<int>(1, BASE_ROLE));
+        emit dataChanged(index2, index2, QVector<int>(1, BASE_ROLE));
     }
 }
 

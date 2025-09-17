@@ -5,6 +5,10 @@
 
 Additional data models aimed to bring more power to QML applications by using useful C++ models in back-end.
 
+## 📖 [Complete Usage Guide](USAGE.md)
+
+**👉 For detailed examples, API reference, and integration instructions, see the [USAGE.md](USAGE.md) guide.**
+
 ## Features
 
 * **`QQmlObjectListModel`**: A much nicer way to expose C++ list to QML than the quick & dirty `QList<QObject*>` property. Supports all the strong model features of `QAbstractListModel` while showing the simple and well know API of QList.

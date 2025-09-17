@@ -33,6 +33,7 @@ class QQMLMODELS_EXPORT QQmlVariantListModel : public QAbstractListModel {
     void replace(int pos, const QVariant &item);
     void insertList(int idx, const QVariantList &itemList);
     void move(int idx, int pos);
+    void swap(int idx1, int idx2);
     void remove(int idx);
     QVariant get(int idx) const;
     QVariantList list(void) const;

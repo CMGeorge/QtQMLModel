@@ -132,11 +132,22 @@ class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase
     QVariant data(const QModelIndex &index, int role) const {
         QVariant ret;
         ItemType *item = at(index.row());
-        const QByteArray rolename =
-            (role != Qt::DisplayRole ? m_roles.value(role, emptyBA()) : m_dispRoleName);
-        if (item != Q_NULLPTR && !rolename.isEmpty()) {
-            ret.setValue(role != baseRole() ? item->property(rolename)
-                                            : QVariant::fromValue(static_cast<QObject *>(item)));
+        if (item != Q_NULLPTR) {
+            if (role == Qt::DisplayRole) {
+                // For Qt::DisplayRole, use m_dispRoleName if set, otherwise return the object itself
+                if (!m_dispRoleName.isEmpty()) {
+                    ret.setValue(item->property(m_dispRoleName));
+                } else {
+                    ret.setValue(QVariant::fromValue(static_cast<QObject *>(item)));
+                }
+            } else if (role == baseRole()) {
+                ret.setValue(QVariant::fromValue(static_cast<QObject *>(item)));
+            } else {
+                const QByteArray rolename = m_roles.value(role, emptyBA());
+                if (!rolename.isEmpty()) {
+                    ret.setValue(item->property(rolename));
+                }
+            }
         }
         return ret;
     }
