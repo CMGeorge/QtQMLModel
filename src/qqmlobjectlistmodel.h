@@ -134,7 +134,8 @@ class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase
         ItemType *item = at(index.row());
         if (item != Q_NULLPTR) {
             if (role == Qt::DisplayRole) {
-                // For Qt::DisplayRole, use m_dispRoleName if set, otherwise return the object itself
+                // For Qt::DisplayRole, use m_dispRoleName if set, otherwise return the object
+                // itself
                 if (!m_dispRoleName.isEmpty()) {
                     ret.setValue(item->property(m_dispRoleName));
                 } else {

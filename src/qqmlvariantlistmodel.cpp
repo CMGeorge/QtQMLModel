@@ -274,7 +274,7 @@ void QQmlVariantListModel::move(int idx, int pos) {
         // When moving from higher to lower index, use pos
         int destination = (idx < pos) ? pos + 1 : pos;
         beginMoveRows(NO_PARENT, idx, idx, NO_PARENT, destination);
-        
+
         m_items.move(idx, pos);
         endMoveRows();
     }
@@ -289,11 +289,11 @@ void QQmlVariantListModel::move(int idx, int pos) {
 void QQmlVariantListModel::swap(int idx1, int idx2) {
     if (idx1 != idx2 && idx1 >= 0 && idx1 < m_items.size() && idx2 >= 0 && idx2 < m_items.size()) {
         m_items.swapItemsAt(idx1, idx2);
-        
+
         // Emit dataChanged for both positions
         QModelIndex index1 = QAbstractListModel::index(idx1, 0, NO_PARENT);
         QModelIndex index2 = QAbstractListModel::index(idx2, 0, NO_PARENT);
-        
+
         emit dataChanged(index1, index1, QVector<int>(1, BASE_ROLE));
         emit dataChanged(index2, index2, QVector<int>(1, BASE_ROLE));
     }

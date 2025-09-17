@@ -4,12 +4,19 @@
 
 echo "Setting up QtQMLModel development environment..."
 
-# Install git hook
+# Install git hooks
 if [ -d ".git" ]; then
-    echo "Installing pre-commit hook..."
+    echo "Installing git hooks..."
+    
+    # Install pre-commit hook
     cp scripts/pre-commit .git/hooks/pre-commit
     chmod +x .git/hooks/pre-commit
     echo "✓ Pre-commit hook installed"
+    
+    # Install pre-push hook
+    cp scripts/pre-push .git/hooks/pre-push
+    chmod +x .git/hooks/pre-push
+    echo "✓ Pre-push hook installed"
 else
     echo "Warning: Not a git repository, skipping git hooks"
 fi
