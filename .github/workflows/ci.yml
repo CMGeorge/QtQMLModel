@@ -103,22 +103,28 @@ jobs:
         dir: ${{ github.workspace }}/Qt-Desktop
         install-deps: 'true'
 
-    - name: Debug Qt installation paths
-      run: |
-        echo "Current Qt6_DIR: $Qt6_DIR"
-        echo "Contents of Qt-Desktop:"
-        find ${{ github.workspace }}/Qt-Desktop -type d -maxdepth 3 | head -20
-        echo "Contents of Qt installation:"
-        find ${{ github.workspace }}/Qt -type d -maxdepth 3 | head -20
+    - name: Install Qt for Android
+      if: startsWith(matrix.platform, 'android')
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.7.2'
+        target: 'android'
+        arch: '${{ matrix.platform }}'
+        dir: '${{ github.workspace }}/Qt'
+        cache: true
 
     - name: Configure CMake for ${{ matrix.platform }}
       run: |
-        # Set QT_HOST_PATH for cross-compilation
+        # Set QT_HOST_PATH for cross-compilation and ensure correct Qt6_DIR
         if [[ "${{ matrix.platform }}" == android* ]] || [[ "${{ matrix.platform }}" == "ios" ]]; then
           if [[ "${{ runner.os }}" == "macOS" ]]; then
-            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/clang_64"
+            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/clang_64"
           else
-            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/6.7.2/gcc_64"
+            export QT_HOST_PATH="${{ github.workspace }}/Qt-Desktop/Qt/6.7.2/gcc_64"
+          fi
+          # For Android builds, use the Android Qt installation
+          if [[ "${{ matrix.platform }}" == android* ]]; then
+            export Qt6_DIR="${{ github.workspace }}/Qt/6.7.2/${{ matrix.platform }}"
           fi
           echo "Using QT_HOST_PATH: $QT_HOST_PATH"
           echo "Qt6_DIR for mobile build: $Qt6_DIR"
