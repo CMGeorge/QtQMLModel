@@ -26,7 +26,7 @@ elif command -v pacman &> /dev/null; then
     sudo pacman -S qt6-base qt6-declarative cmake doxygen graphviz clang
 else
     echo "Unknown package manager. Please install dependencies manually:"
-    echo "- Qt 6.4+"
+    echo "- Qt 6.8+"
     echo "- CMake 3.22+"
     echo "- Doxygen"
     echo "- Graphviz"

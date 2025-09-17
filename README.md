@@ -18,7 +18,7 @@ Additional data models aimed to bring more power to QML applications by using us
 
 ## Requirements
 
-- Qt 6.4 or later
+- Qt 6.8 or later
 - CMake 3.22 or later
 - C++17 compatible compiler
 

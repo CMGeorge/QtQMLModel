@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        qt-version: [6.4.2, 6.5.3]
+        qt-version: [6.8.0]
         build-type: [Release, Debug]
     
     runs-on: ${{ matrix.os }}
@@ -33,7 +33,7 @@ jobs:
       with:
         version: ${{ matrix.qt-version }}
         cache: true
-        modules: 'qtdeclarative'
+        modules: 'qtquick'
     
     - name: Configure CMake
       run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
@@ -54,8 +54,8 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
-        version: '6.5.3'
-        modules: 'qtdeclarative'
+        version: '6.8.0'
+        modules: 'qtquick'
     
     - name: Install tools
       run: |
@@ -96,8 +96,8 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
-        version: '6.5.3'
-        modules: 'qtdeclarative'
+        version: '6.8.0'
+        modules: 'qtquick'
     
     - name: Build Release
       run: |
