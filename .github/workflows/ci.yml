@@ -23,7 +23,7 @@ jobs:
     
     - name: Cache Qt
       id: cache-qt
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ../Qt
         key: ${{ runner.os }}-Qt-${{ matrix.qt-version }}
@@ -78,7 +78,7 @@ jobs:
         doxygen docs/Doxyfile
         
     - name: Upload documentation
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: documentation
         path: docs/html/

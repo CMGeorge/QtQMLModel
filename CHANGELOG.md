@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Qt6 compatibility issues
 - Build system improvements for cross-platform support
 - Header include paths and export definitions
+- **Updated deprecated GitHub Actions (upload-artifact@v3 to v4, cache@v3 to v4)**
 
 ## [1.0.0] - Previous Release
 
