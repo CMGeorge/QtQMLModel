@@ -1,0 +1,13 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="15,31,164,56"/>
+<area shape="rect" id="Node000001" href="$class_q_qml_object_list_model_base.html" title=" " alt="" coords="221,5,417,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="178,31,221,26,221,31,178,36"/>
+<area shape="rect" id="Node000005" href="$class_q_qml_variant_list_model.html" title="Provides a generic way to generate a list model from QVariant, suitable for QML." alt="" coords="235,55,403,80"/>
+<area shape="poly" id="edge3_Node000000_Node000005" title=" " alt="" coords="178,50,235,56,235,61,178,55"/>
+<area shape="rect" id="Node000002" href="$class_q_qml_object_list_model.html" title="Provides a generic way to generate a list model from QObject derived class, suitable for QML." alt="" coords="465,51,629,91"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="388,31,466,50,465,55,387,36"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,112,173,137"/>
+<area shape="rect" id="Node000003" href="$class_q_qml_object_list_sort_filter_model_base.html" title=" " alt="" coords="228,105,411,145"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="187,122,228,122,228,127,187,127"/>
+<area shape="poly" id="edge5_Node000003_Node000002" title=" " alt="" coords="418,99,464,88,466,93,419,104"/>
+</map>

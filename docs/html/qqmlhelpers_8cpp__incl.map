@@ -1,0 +1,33 @@
+<map id="src/QtSuperMacros/qqmlhelpers.cpp" name="src/QtSuperMacros/qqmlhelpers.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="527,5,783,31"/>
+<area shape="rect" id="Node000002" href="$qqmlautopropertyhelpers_8h.html" title=" " alt="" coords="207,79,405,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="600,33,376,79,375,73,599,28"/>
+<area shape="rect" id="Node000006" href="$qqmlconstrefpropertyhelpers_8h.html" title=" " alt="" coords="429,79,652,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="638,33,572,74,570,69,636,28"/>
+<area shape="rect" id="Node000007" href="$qqmlenumclasshelper_8h.html" title=" " alt="" coords="5,79,183,104"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="565,33,197,80,197,74,565,28"/>
+<area shape="rect" id="Node000008" href="$qqmllistpropertyhelper_8h.html" title=" " alt="" coords="1103,79,1285,104"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="742,28,1094,74,1094,80,742,33"/>
+<area shape="rect" id="Node000011" href="$qqmlptrpropertyhelpers_8h.html" title=" " alt="" coords="676,79,864,104"/>
+<area shape="poly" id="edge14_Node000001_Node000011" title=" " alt="" coords="675,28,741,69,738,74,672,33"/>
+<area shape="rect" id="Node000012" href="$qqmlvarpropertyhelpers_8h.html" title=" " alt="" coords="888,79,1079,104"/>
+<area shape="poly" id="edge17_Node000001_Node000012" title=" " alt="" coords="709,28,918,73,917,78,707,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="503,152,578,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="344,101,491,146,489,151,343,107"/>
+<area shape="rect" id="Node000004" href="$qqmlhelperscommon_8h.html" title=" " alt="" coords="684,152,856,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="381,101,682,147,681,153,380,107"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="731,225,809,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="773,178,773,212,767,212,767,178"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="543,104,543,138,538,138,538,104"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="578,101,720,145,719,150,577,107"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="166,101,490,153,489,158,165,107"/>
+<area shape="poly" id="edge13_Node000008_Node000004" title=" " alt="" coords="1126,107,852,152,851,147,1125,101"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1081,152,1155,177"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="1184,106,1142,144,1139,141,1180,102"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1179,152,1361,177"/>
+<area shape="poly" id="edge12_Node000008_Node000010" title=" " alt="" coords="1208,102,1249,141,1246,144,1204,106"/>
+<area shape="poly" id="edge15_Node000011_Node000003" title=" " alt="" coords="734,107,592,150,590,145,732,101"/>
+<area shape="poly" id="edge16_Node000011_Node000004" title=" " alt="" coords="773,104,773,138,767,138,767,104"/>
+<area shape="poly" id="edge18_Node000012_Node000003" title=" " alt="" coords="913,107,592,158,591,153,912,101"/>
+<area shape="poly" id="edge19_Node000012_Node000004" title=" " alt="" coords="950,107,818,150,817,145,948,101"/>
+</map>

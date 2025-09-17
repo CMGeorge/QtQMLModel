@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        qt-version: [6.4.2, 6.5.3]
+        build-type: [Release, Debug]
+    
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    
+    - name: Cache Qt
+      id: cache-qt
+      uses: actions/cache@v3
+      with:
+        path: ../Qt
+        key: ${{ runner.os }}-Qt-${{ matrix.qt-version }}
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: ${{ matrix.qt-version }}
+        cache: true
+        modules: 'qtdeclarative'
+    
+    - name: Configure CMake
+      run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
+    
+    - name: Build
+      run: cmake --build build --config ${{ matrix.build-type }}
+    
+    - name: Test
+      working-directory: build
+      run: ctest --output-on-failure --build-config ${{ matrix.build-type }}
+
+  code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.5.3'
+        modules: 'qtdeclarative'
+    
+    - name: Install tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y clang-format clang-tidy cppcheck doxygen
+    
+    - name: Check formatting
+      run: |
+        find src/ -name "*.cpp" -o -name "*.h" | xargs clang-format --dry-run --Werror
+    
+    - name: Static analysis
+      run: |
+        cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        run-clang-tidy -p build src/
+    
+    - name: Cppcheck
+      run: |
+        cppcheck --enable=all --error-exitcode=1 --inline-suppr src/
+    
+    - name: Generate documentation
+      run: |
+        doxygen docs/Doxyfile
+        
+    - name: Upload documentation
+      uses: actions/upload-artifact@v3
+      with:
+        name: documentation
+        path: docs/html/
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build, code-quality]
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.5.3'
+        modules: 'qtdeclarative'
+    
+    - name: Build Release
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+        cmake --build build
+    
+    - name: Package
+      run: |
+        cd build
+        cpack
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/*.tar.gz
+        draft: false
+        prerelease: false

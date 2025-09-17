@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Pre-commit hook for QtQMLModel
+# This script runs code quality checks before allowing a commit
+
+set -e
+
+echo "Running pre-commit checks..."
+
+# Check if we're in the right directory
+if [ ! -f "CMakeLists.txt" ]; then
+    echo "Error: This doesn't appear to be the QtQMLModel root directory"
+    exit 1
+fi
+
+# Check for clang-format
+if ! command -v clang-format &> /dev/null; then
+    echo "Warning: clang-format not found. Skipping format check."
+else
+    echo "Checking code formatting..."
+    
+    # Get list of C++ files to check
+    FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(cpp|h)$' || true)
+    
+    if [ -n "$FILES" ]; then
+        # Check if files are properly formatted
+        UNFORMATTED=$(echo "$FILES" | xargs clang-format --dry-run --Werror 2>&1 || true)
+        
+        if [ -n "$UNFORMATTED" ]; then
+            echo "Error: Code is not properly formatted. Run './scripts/build.sh format' to fix."
+            echo "$UNFORMATTED"
+            exit 1
+        fi
+        
+        echo "✓ Code formatting is correct"
+    fi
+fi
+
+# Build and test if there are source changes
+CPP_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(cpp|h)$' || true)
+CMAKE_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E 'CMakeLists\.txt$' || true)
+
+if [ -n "$CPP_FILES" ] || [ -n "$CMAKE_FILES" ]; then
+    echo "Source files changed, running build and tests..."
+    
+    # Build the project
+    if ! ./scripts/build.sh build; then
+        echo "Error: Build failed"
+        exit 1
+    fi
+    
+    # Run tests
+    if ! ./scripts/build.sh test; then
+        echo "Error: Tests failed"
+        exit 1
+    fi
+    
+    echo "✓ Build and tests passed"
+fi
+
+echo "All pre-commit checks passed!"
+exit 0

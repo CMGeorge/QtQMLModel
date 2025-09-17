@@ -10,5 +10,5 @@
 #else
 #define QQMLMODELS_EXPORT
 #endif
-//#define  QQMLMODELS_EXPORT
+// #define  QQMLMODELS_EXPORT
 #endif // QQMLMODELS_GLOBAL_H
