@@ -6,19 +6,22 @@
 
     \ingroup QT_QML_MODELS
 
-    \brief Provides a generic way to generate a list model from QObject derived class, suitable for QML
+    \brief Provides a generic way to generate a list model from QObject derived class, suitable for
+   QML
 
-    QQmlObjectListModel is a convenience subclass \c QAbstractListModel that makes use of C++ templates
-    and Qt Meta Object to extract properties from a \c QObject derived class and create according roles
-    inside the model.
+    QQmlObjectListModel is a convenience subclass \c QAbstractListModel that makes use of C++
+   templates and Qt Meta Object to extract properties from a \c QObject derived class and create
+   according roles inside the model.
 
     This is a far better way than to expose directly a \c QList<QObject *> inside a \c QVariant.
 
-    And this is far simpler than doing all Qt model stuff manually : no subclassing or reimplementing need.
+    And this is far simpler than doing all Qt model stuff manually : no subclassing or
+   reimplementing need.
 
     The class was designed so that most of the added API is really common with \c QList one.
 
-    \b Note : Simply needs that the class used for items inherits \c QObject and has Qt Meta Properties.
+    \b Note : Simply needs that the class used for items inherits \c QObject and has Qt Meta
+   Properties.
 
     \sa QQmlVariantListModel
 */
@@ -55,14 +58,14 @@
 /*!
     \fn QList<ItemType *> QQmlObjectListModel::listAs () const
 
-    \details A template method to retreive all the items as \c QList<T*> typed Qt object pointer list.
+    \details A template method to retreive all the items as \c QList<T*> typed Qt object pointer
+   list.
 
     \tparam ItemType The class as object type to use in the returned pointer list
     \return A strongly typed \c QList of items Qt object pointers
 
     \sa list() const
 */
-
 
 /*!
     \details Returns the data in a specific index for a given role.
@@ -104,7 +107,6 @@
     \return The matching role, \c -1 if not found
 */
 
-
 /*!
     \details Counts the items in the model.
 
@@ -143,7 +145,6 @@
     only if they have no parent (because the model took the ownership).
 */
 
-
 /*!
     \details Adds the given item at the end of the model.
 
@@ -152,7 +153,6 @@
     \sa prepend(QObject*), insert(int,QObject*)
 */
 
-
 /*!
     \details Adds the given item at the beginning of the model.
 
@@ -160,7 +160,6 @@
 
     \sa append(QObject*), insert(int,QObject*)
 */
-
 
 /*!
     \details Adds the given item at a certain position in the model.
@@ -171,7 +170,6 @@
     \sa append(QObject*), prepend(QObject*)
 */
 
-
 /*!
     \details Adds the given list of items at the end of the model.
 
@@ -180,7 +178,6 @@
     \sa prepend(QObjectList), insert(int, QObjectList)
 */
 
-
 /*!
     \details Adds the given list of items at the beginning of the model.
 
@@ -188,7 +185,6 @@
 
     \sa append(QObjectList), insert(int, QObjectList)
 */
-
 
 /*!
     \details Adds the given list of items at a certain position in the model.
@@ -206,20 +202,17 @@
     \param pos The position where it willl be after the move
 */
 
-
 /*!
     \details Remove an item from the model.
 
     \param item The pointer to the item object
 */
 
-
 /*!
     \details Remove an item from the model.
 
     \param idx The position of the item in the model
 */
-
 
 /*!
     \details Retreives a model item as standard Qt object pointer.
@@ -273,3 +266,11 @@
 
     \param name The name of the property / role that is used as the index key
 */
+
+// Include TestObject for explicit template instantiation
+#include "testobject.h"
+
+// Explicit template instantiation to ensure Windows DLL linking works correctly
+// This forces the template to be instantiated in the library, making its symbols
+// available for export and resolving Windows LNK2019 errors
+template class QQmlObjectListModel<TestObject>;

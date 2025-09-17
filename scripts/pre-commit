@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Pre-commit hook for QtQMLModel
+# This script runs comprehensive code quality checks before allowing a commit
+
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+# Check if we're in the right directory
+if [ ! -f "CMakeLists.txt" ]; then
+    echo "❌ Error: This doesn't appear to be the QtQMLModel root directory"
+    exit 1
+fi
+
+# Function to check if command exists
+command_exists() {
+    command -v "$1" &> /dev/null
+}
+
+# 1. Check code formatting with clang-format
+if ! command_exists clang-format; then
+    echo "⚠️  Warning: clang-format not found. Skipping format check."
+else
+    echo "📝 Checking code formatting..."
+    
+    # Get list of C++ files to check (only staged files)
+    FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(cpp|h)$' || true)
+    
+    if [ -n "$FILES" ]; then
+        # Check if files are properly formatted
+        if ! echo "$FILES" | xargs clang-format --dry-run --Werror &> /dev/null; then
+            echo "❌ Error: Code is not properly formatted."
+            echo "Run the following command to fix formatting:"
+            echo "  find src/ -name '*.cpp' -o -name '*.h' | xargs clang-format -i"
+            exit 1
+        fi
+        
+        echo "✅ Code formatting is correct"
+    else
+        echo "ℹ️  No C++ files to check formatting"
+    fi
+fi
+
+# 2. Build and test if there are source changes
+CPP_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(cpp|h)$' || true)
+CMAKE_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E 'CMakeLists\.txt$' || true)
+
+if [ -n "$CPP_FILES" ] || [ -n "$CMAKE_FILES" ]; then
+    echo "🔨 Source files changed, running build and tests..."
+    
+    # Build the project
+    echo "🏗️  Building project..."
+    if ! cmake --build build --parallel $(nproc) 2>/dev/null; then
+        echo "❌ Error: Build failed"
+        exit 1
+    fi
+    
+    # Run tests
+    echo "🧪 Running tests..."
+    if ! (cd build && ctest --output-on-failure) 2>/dev/null; then
+        echo "❌ Error: Tests failed"
+        exit 1
+    fi
+    
+    echo "✅ Build and tests passed"
+else
+    echo "ℹ️  No source files changed, skipping build and tests"
+fi
+
+# 3. Run cppcheck static analysis
+if [ -n "$CPP_FILES" ]; then
+    if ! command_exists cppcheck; then
+        echo "⚠️  Warning: cppcheck not found. Skipping static analysis."
+    else
+        echo "🔍 Running static analysis with cppcheck..."
+        if ! ./scripts/cppcheck.sh >/dev/null 2>&1; then
+            echo "❌ Error: Static analysis found issues"
+            echo "Run './scripts/cppcheck.sh' to see details"
+            exit 1
+        fi
+        echo "✅ Static analysis passed"
+    fi
+else
+    echo "ℹ️  No C++ files to analyze"
+fi
+
+echo "🎉 All pre-commit checks passed!"
+exit 0
