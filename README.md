@@ -169,7 +169,7 @@ The project uses several tools to maintain code quality:
 
 - **clang-format**: Code formatting (configured in `.clang-format`)
 - **clang-tidy**: Static analysis (configured in `.clang-tidy`)
-- **cppcheck**: Additional static analysis
+- **cppcheck**: Additional static analysis with Qt support (see `docs/CPPCHECK_QT_CONFIG.md`)
 - **Doxygen**: API documentation generation
 
 ### Contributing

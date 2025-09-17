@@ -159,9 +159,32 @@ find src/ tests/ -name "*.cpp" -o -name "*.h" | xargs clang-format --dry-run --W
 #### Tools Used
 
 - **clang-format**: Automatic code formatting
-- **clang-tidy**: Static analysis and modernization
-- **cppcheck**: Additional static analysis
+- **clang-tidy**: Static analysis and modernization  
+- **cppcheck**: Additional static analysis with Qt support
 - **Doxygen**: Documentation generation
+
+#### Cppcheck Qt Configuration
+
+The project includes special configuration for cppcheck to properly handle Qt-specific keywords and macros. This prevents false "unknownMacro" warnings for Qt code patterns.
+
+**Configured Qt Keywords:**
+- `slots`, `signals` - Qt access specifiers
+- `Q_OBJECT`, `Q_GADGET` - Qt meta-object system
+- `Q_PROPERTY`, `Q_EMIT` - Qt property and signal system
+- `Q_SIGNALS`, `Q_SLOTS` - Qt macro equivalents
+- Project-specific macros: `QQML_EXPORT`, `MAKE_GETTER_NAME`, etc.
+
+**Local Development:**
+```bash
+# Run cppcheck with Qt configuration
+./scripts/build.sh lint
+
+# Manual cppcheck with Qt support
+cppcheck --enable=all --define=slots= --define=signals=public --define=Q_OBJECT= src/
+```
+
+**CI/CD Integration:**
+The GitHub Actions workflow automatically runs cppcheck with full Qt macro definitions, ensuring all Qt-specific code patterns are properly recognized and analyzed.
 
 ### Continuous Integration
 
