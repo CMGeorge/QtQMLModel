@@ -39,6 +39,7 @@ DEFINES=(
   "-DQ_PROPERTY(x)="
   "-DQ_NULLPTR=nullptr"
   "-DQQML_EXPORT="
+  "-DQ_MOC_INCLUDE"
   "-DMAKE_GETTER_NAME(name)=get##name"
   "-DQML_WRITABLE_AUTO_PROPERTY(type,name)="
   "-DQML_READONLY_AUTO_PROPERTY(type,name)="

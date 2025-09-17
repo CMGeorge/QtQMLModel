@@ -92,6 +92,7 @@ jobs:
             -D"Q_PROPERTY(x)=" \
             -DQ_NULLPTR=nullptr \
             -DQQML_EXPORT= \
+            -DQ_MOC_INCLUDE \
             -D"MAKE_GETTER_NAME(name)=get##name" \
             -D"QML_WRITABLE_AUTO_PROPERTY(type,name)=" \
             -D"QML_READONLY_AUTO_PROPERTY(type,name)=" \
