@@ -20,7 +20,14 @@ find_package(Qt6 COMPONENTS REQUIRED
     Test
 )
 
-qt_add_library(CPPQmlModels SHARED
+# Use STATIC for iOS, SHARED for other platforms
+if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    set(LIBRARY_TYPE STATIC)
+else()
+    set(LIBRARY_TYPE SHARED)
+endif()
+
+qt_add_library(CPPQmlModels ${LIBRARY_TYPE}
     src/qqmlmodels_global.h
 
     src/qqmlobjectlistmodel.h
