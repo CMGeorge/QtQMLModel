@@ -266,3 +266,11 @@
 
     \param name The name of the property / role that is used as the index key
 */
+
+// Include TestObject for explicit template instantiation
+#include "testobject.h"
+
+// Explicit template instantiation to ensure Windows DLL linking works correctly
+// This forces the template to be instantiated in the library, making its symbols
+// available for export and resolving Windows LNK2019 errors
+template class QQmlObjectListModel<TestObject>;

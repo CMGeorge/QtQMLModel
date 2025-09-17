@@ -28,6 +28,9 @@ qt_add_library(CPPQmlModels SHARED
     src/qqmlvariantlistmodel.h
     src/qqmlvariantlistmodel.cpp
 
+    src/testobject.h
+    src/testobject.cpp
+
     src/QtSuperMacros/qqmlautopropertyhelpers.h
     src/QtSuperMacros/qqmlconstrefpropertyhelpers.h
     src/QtSuperMacros/qqmlenumclasshelper.h

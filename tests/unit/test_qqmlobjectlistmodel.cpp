@@ -2,42 +2,7 @@
 #include <QSignalSpy>
 #include <QtTest/QtTest>
 #include <qqmlobjectlistmodel.h>
-
-// Test object for the model
-class TestObject : public QObject {
-    Q_OBJECT
-    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(int value READ value WRITE setValue NOTIFY valueChanged)
-
-  public:
-    explicit TestObject(QObject *parent = nullptr) : QObject(parent), m_value(0) {}
-    TestObject(const QString &name, int value, QObject *parent = nullptr)
-        : QObject(parent), m_name(name), m_value(value) {}
-
-    QString name() const { return m_name; }
-    void setName(const QString &name) {
-        if (m_name != name) {
-            m_name = name;
-            emit nameChanged();
-        }
-    }
-
-    int value() const { return m_value; }
-    void setValue(int value) {
-        if (m_value != value) {
-            m_value = value;
-            emit valueChanged();
-        }
-    }
-
-  signals:
-    void nameChanged();
-    void valueChanged();
-
-  private:
-    QString m_name;
-    int m_value;
-};
+#include <testobject.h>
 
 class TestQQmlObjectListModel : public QObject {
     Q_OBJECT
