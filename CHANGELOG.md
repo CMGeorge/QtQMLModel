@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Migrated to modern CMake as primary build system (QMake files preserved as legacy)
 - Updated CMakeLists.txt to support Qt6 and proper library installation
-- **Updated CI/CD pipeline to use Qt 6.8 without explicit module specification (qtqml not required)**
+- **Updated CI/CD pipeline to use Qt 6.7.2 (compatible with install-qt-action)**
 - Improved .gitignore to exclude build artifacts
 - Enhanced project structure for better maintainability
 

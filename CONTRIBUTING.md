@@ -6,7 +6,7 @@ Thank you for your interest in contributing to QtQMLModel! This document provide
 
 ### Prerequisites
 
-- Qt 6.8 or later
+- Qt 6.7.2 or later
 - CMake 3.22 or later
 - C++17 compatible compiler (GCC 7+, Clang 5+, MSVC 2017+)
 - Git
