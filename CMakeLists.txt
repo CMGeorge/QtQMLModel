@@ -66,6 +66,12 @@ target_link_libraries(CPPQmlModels PRIVATE
     Qt${QT_VERSION_MAJOR}::Qml
 )
 
+# Generate export header for Windows DLL symbols
+generate_export_header(CPPQmlModels
+    BASE_NAME CPPQmlModels
+    EXPORT_FILE_NAME src/cppqmlmodels_export.h
+)
+
 # Set library properties
 set_target_properties(CPPQmlModels PROPERTIES
     VERSION ${PROJECT_VERSION}
