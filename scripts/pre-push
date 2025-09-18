@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# Pre-push hook for QtQMLModel
+# This script runs comprehensive checks before pushing to remote
+
+set -e
+
+echo "🚀 Running pre-push checks..."
+
+# Check if we're in the right directory
+if [ ! -f "CMakeLists.txt" ]; then
+    echo "❌ Error: This doesn't appear to be the QtQMLModel root directory"
+    exit 1
+fi
+
+# Function to check if command exists
+command_exists() {
+    command -v "$1" &> /dev/null
+}
+
+# 1. Ensure everything is committed
+if ! git diff-index --quiet HEAD --; then
+    echo "❌ Error: You have uncommitted changes. Please commit them first."
+    exit 1
+fi
+
+# 2. Full build from clean state
+echo "🏗️  Running full clean build..."
+if [ -d "build" ]; then
+    rm -rf build
+fi
+
+if ! cmake -B build -DCMAKE_BUILD_TYPE=Release >/dev/null 2>&1; then
+    echo "❌ Error: CMake configuration failed"
+    exit 1
+fi
+
+if ! cmake --build build --parallel $(nproc) >/dev/null 2>&1; then
+    echo "❌ Error: Full build failed"
+    exit 1
+fi
+
+echo "✅ Full build successful"
+
+# 3. Run complete test suite
+echo "🧪 Running complete test suite..."
+if ! (cd build && ctest --output-on-failure) >/dev/null 2>&1; then
+    echo "❌ Error: Test suite failed"
+    exit 1
+fi
+
+echo "✅ All tests passed"
+
+# 4. Run comprehensive static analysis
+if command_exists cppcheck; then
+    echo "🔍 Running comprehensive static analysis..."
+    if ! ./scripts/cppcheck.sh >/dev/null 2>&1; then
+        echo "❌ Error: Static analysis found issues"
+        echo "Run './scripts/cppcheck.sh' to see details"
+        exit 1
+    fi
+    echo "✅ Static analysis passed"
+else
+    echo "⚠️  Warning: cppcheck not found. Skipping static analysis."
+fi
+
+# 5. Check code formatting on all files
+if command_exists clang-format; then
+    echo "📝 Checking code formatting on all files..."
+    if ! find src/ -name "*.cpp" -o -name "*.h" | xargs clang-format --dry-run --Werror >/dev/null 2>&1; then
+        echo "❌ Error: Code formatting issues found"
+        echo "Run: find src/ -name '*.cpp' -o -name '*.h' | xargs clang-format -i"
+        exit 1
+    fi
+    echo "✅ Code formatting is correct"
+else
+    echo "⚠️  Warning: clang-format not found. Skipping format check."
+fi
+
+# 6. Check for any TODO/FIXME comments in the code
+TODO_COUNT=$(find src/ -name "*.cpp" -o -name "*.h" | xargs grep -n "TODO\|FIXME" | wc -l)
+if [ "$TODO_COUNT" -gt 0 ]; then
+    echo "⚠️  Warning: Found $TODO_COUNT TODO/FIXME comments in code:"
+    find src/ -name "*.cpp" -o -name "*.h" | xargs grep -n "TODO\|FIXME" || true
+    echo "Consider addressing these before pushing to production."
+fi
+
+# 7. Check branch status
+CURRENT_BRANCH=$(git branch --show-current)
+echo "ℹ️  Pushing branch: $CURRENT_BRANCH"
+
+# 8. Check if this is a merge to main/master
+if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
+    echo "⚠️  Warning: Pushing directly to $CURRENT_BRANCH branch!"
+    echo "Consider using pull requests for code review."
+fi
+
+echo "🎉 All pre-push checks passed! Ready to push."
+exit 0

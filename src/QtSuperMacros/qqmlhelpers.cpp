@@ -1,10 +1,10 @@
 
+#include "qqmlautopropertyhelpers.h"
+#include "qqmlconstrefpropertyhelpers.h"
 #include "qqmlenumclasshelper.h"
 #include "qqmllistpropertyhelper.h"
-#include "qqmlvarpropertyhelpers.h"
 #include "qqmlptrpropertyhelpers.h"
-#include "qqmlconstrefpropertyhelpers.h"
-#include "qqmlautopropertyhelpers.h"
+#include "qqmlvarpropertyhelpers.h"
 
 // TODO : rewrite this doc
 
@@ -15,7 +15,6 @@
     by avoiding manual code duplication, often leading to heavy copy-and-paste,
     which is largely error-prone and not productive at all.
 */
-
 
 /*!
     \def QML_WRITABLE_PROPERTY(type, name)
@@ -37,7 +36,6 @@
     \b Note : Any change from either C++ or QML side will trigger the notification.
 */
 
-
 /*!
     \def QML_READONLY_PROPERTY(type, name)
     \ingroup QT_QML_HELPERS
@@ -58,7 +56,6 @@
     \b Note : Any change from C++ side will trigger the notification to QML.
 */
 
-
 /*!
     \def QML_CONSTANT_PROPERTY(type, name)
     \ingroup QT_QML_HELPERS
@@ -77,7 +74,6 @@
     \b Note : There is no change notifier because value is constant.
 */
 
-
 /*!
     \def QML_ENUM_CLASS(name, ...)
     \ingroup QT_QML_HELPERS
@@ -94,8 +90,8 @@
 
     Example in use :
     \code
-        QML_ENUM_CLASS (DaysOfWeek, Monday = 1, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
-    \endcode
+        QML_ENUM_CLASS (DaysOfWeek, Monday = 1, Tuesday, Wednesday, Thursday, Friday, Saturday,
+   Sunday) \endcode
 
     \b Note : The QML registration using \c qmlRegisterUncreatableType() will still be needed.
 */

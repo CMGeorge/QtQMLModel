@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="2.13.0"/>
+    <errors>
+        <error id="checkersReport" severity="information" msg="Active checkers: 157/592 (use --checkers-report=&lt;filename&gt; to see details)" verbose="Active checkers: 157/592 (use --checkers-report=&lt;filename&gt; to see details)"/>
+    </errors>
+</results>
