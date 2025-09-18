@@ -34,3 +34,4 @@ docs/html/
 docs/latex/
 *.log
 .DS_Store
+reports/cppcheck.txt
