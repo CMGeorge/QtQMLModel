@@ -89,6 +89,12 @@ if(WIN32)
         $<TARGET_FILE_DIR:CPPQmlModels>/../tests/unit/$<CONFIG>/
         COMMENT "Copying CPPQmlModels DLL to test directory"
     )
+    # Ensure dll is next to the target and path is predictable
+    set_target_properties(CPPQmlModels PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>
+        RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release
+    )
 endif()
 
 # Install targets
