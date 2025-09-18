@@ -79,6 +79,17 @@ set_target_properties(CPPQmlModels PROPERTIES
     EXPORT_NAME CPPQmlModels
 )
 
+# On Windows, copy DLL to test directory for runtime access
+if(WIN32)
+    # Copy DLL to build directory where tests run
+    add_custom_command(TARGET CPPQmlModels POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:CPPQmlModels>
+        $<TARGET_FILE_DIR:CPPQmlModels>/../tests/unit/$<CONFIG>/
+        COMMENT "Copying CPPQmlModels DLL to test directory"
+    )
+endif()
+
 # Install targets
 install(TARGETS CPPQmlModels
     EXPORT CPPQmlModelsTargets

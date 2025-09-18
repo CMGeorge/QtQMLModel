@@ -2,9 +2,6 @@
 <results version="2">
     <cppcheck version="2.13.0"/>
     <errors>
-        <error id="missingInclude" severity="information" msg="Include file: &quot;cppqmlmodels_export.h&quot; not found." verbose="Include file: &quot;cppqmlmodels_export.h&quot; not found.">
-            <location file="/workspaces/QtQMLModel/src/qqmlmodels_global.h" line="7" column="0"/>
-        </error>
         <error id="checkersReport" severity="information" msg="Active checkers: 157/592 (use --checkers-report=&lt;filename&gt; to see details)" verbose="Active checkers: 157/592 (use --checkers-report=&lt;filename&gt; to see details)"/>
     </errors>
 </results>

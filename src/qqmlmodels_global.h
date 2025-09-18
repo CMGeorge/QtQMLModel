@@ -1,12 +1,11 @@
 #ifndef QQMLMODELS_GLOBAL_H
 #define QQMLMODELS_GLOBAL_H
 
-#include <QtCore/qglobal.h>
-
-// Use CMake-generated export header for proper Windows DLL symbol export
+// Use CMake-generated export header for Windows DLL symbol management
+// cppcheck-suppress missingInclude
 #include "cppqmlmodels_export.h"
 
-// Map the generated export macro to our library's export macro name
+// Define export macro using the CMake-generated one
 #define QQMLMODELS_EXPORT CPPQMLMODELS_EXPORT
 
 #endif // QQMLMODELS_GLOBAL_H
