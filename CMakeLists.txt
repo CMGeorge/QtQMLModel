@@ -83,6 +83,7 @@ set_target_properties(CPPQmlModels PROPERTIES
 if(WIN32)
     # Copy DLL to build directory where tests run
     add_custom_command(TARGET CPPQmlModels POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:CPPQmlModels>/../tests/unit/$<CONFIG>/
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         $<TARGET_FILE:CPPQmlModels>
         $<TARGET_FILE_DIR:CPPQmlModels>/../tests/unit/$<CONFIG>/
