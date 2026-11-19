@@ -104,10 +104,10 @@ QHash<int, QByteArray> QQmlVariantListModel::roleNames() const {
 bool QQmlVariantListModel::setData(const QModelIndex &index, const QVariant &value, int role) {
     bool ret = false;
     int idx = index.row();
-    if (idx >= 0 && idx < count() && role == BASE_ROLE) {
+    if (idx >= 0 && idx < count() && (role == BASE_ROLE || role == Qt::DisplayRole)) {
         m_items.replace(idx, value);
         QModelIndex item = QAbstractListModel::index(idx, 0, NO_PARENT);
-        emit dataChanged(item, item, QVector<int>(1, role));
+        emit dataChanged(item, item, {BASE_ROLE, Qt::DisplayRole});
         ret = true;
     }
     return ret;
@@ -199,7 +199,7 @@ void QQmlVariantListModel::replace(int pos, const QVariant &item) {
     if (pos >= 0 && pos < count()) {
         m_items.replace(pos, item);
         QModelIndex index = QAbstractListModel::index(pos, 0, NO_PARENT);
-        emit dataChanged(index, index, QVector<int>(1, BASE_ROLE));
+        emit dataChanged(index, index, {BASE_ROLE, Qt::DisplayRole});
     }
 }
 
@@ -268,7 +268,7 @@ void QQmlVariantListModel::insertList(int idx, const QVariantList &itemList) {
     \param pos The position where it willl be after the move
 */
 void QQmlVariantListModel::move(int idx, int pos) {
-    if (idx != pos) {
+    if (idx != pos && idx >= 0 && pos >= 0 && idx < count() && pos < count()) {
         // Qt's beginMoveRows expects the destination index based on the state BEFORE the move
         // When moving from lower to higher index, use pos + 1
         // When moving from higher to lower index, use pos
@@ -294,8 +294,8 @@ void QQmlVariantListModel::swap(int idx1, int idx2) {
         QModelIndex index1 = QAbstractListModel::index(idx1, 0, NO_PARENT);
         QModelIndex index2 = QAbstractListModel::index(idx2, 0, NO_PARENT);
 
-        emit dataChanged(index1, index1, QVector<int>(1, BASE_ROLE));
-        emit dataChanged(index2, index2, QVector<int>(1, BASE_ROLE));
+        emit dataChanged(index1, index1, {BASE_ROLE, Qt::DisplayRole});
+        emit dataChanged(index2, index2, {BASE_ROLE, Qt::DisplayRole});
     }
 }
 

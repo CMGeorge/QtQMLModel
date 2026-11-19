@@ -167,8 +167,9 @@ void TestQQmlObjectListModel::testData() {
     QVERIFY(index.isValid());
 
     // Test data retrieval for different roles
-    QVariant data = model->data(index, Qt::DisplayRole);
-    QVERIFY(data.isValid());
+    // No display role name was given, so Qt::DisplayRole yields an invalid variant
+    QVERIFY(!model->data(index, Qt::DisplayRole).isValid());
+    QCOMPARE(model->data(index, model->roleForName("name")).toString(), QString("test"));
 }
 
 void TestQQmlObjectListModel::testSignals() {

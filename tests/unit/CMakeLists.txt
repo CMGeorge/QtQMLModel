@@ -1,5 +1,7 @@
 qt_add_executable(test_qqmlobjectlistmodel
     test_qqmlobjectlistmodel.cpp
+    testobject.h
+    testobject.cpp
 )
 
 target_link_libraries(test_qqmlobjectlistmodel PRIVATE

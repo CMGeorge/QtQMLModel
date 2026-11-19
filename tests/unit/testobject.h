@@ -1,13 +1,11 @@
 #ifndef TESTOBJECT_H
 #define TESTOBJECT_H
 
-#include "qqmlmodels_global.h"
 #include <QObject>
 #include <QString>
 
 // Test utility class for demonstrating QQmlObjectListModel usage
-// This class is exported to ensure Windows DLL linking works correctly
-class QQMLMODELS_EXPORT TestObject : public QObject {
+class TestObject : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(int value READ value WRITE setValue NOTIFY valueChanged)

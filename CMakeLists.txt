@@ -13,12 +13,13 @@ if(BUILD_TESTING)
     enable_testing()
 endif()
 
-include(GenerateExportHeader)
 find_package(Qt6 COMPONENTS REQUIRED
     Core
     Qml
-    Test
 )
+if(BUILD_TESTING)
+    find_package(Qt6 COMPONENTS REQUIRED Test)
+endif()
 
 # Use STATIC for iOS, SHARED for other platforms
 if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
@@ -35,9 +36,6 @@ qt_add_library(CPPQmlModels ${LIBRARY_TYPE}
     src/qqmlvariantlistmodel.h
     src/qqmlvariantlistmodel.cpp
 
-    src/testobject.h
-    src/testobject.cpp
-
     src/QtSuperMacros/qqmlautopropertyhelpers.h
     src/QtSuperMacros/qqmlconstrefpropertyhelpers.h
     src/QtSuperMacros/qqmlenumclasshelper.h
@@ -49,19 +47,20 @@ qt_add_library(CPPQmlModels ${LIBRARY_TYPE}
 )
 
 # Define that we are building the library (for export macros)
-add_definitions(-DQQML_EXPORT)
+target_compile_definitions(CPPQmlModels PRIVATE QQML_EXPORT)
 
 target_include_directories(CPPQmlModels
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/QtSuperMacros>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/src>
-        $<INSTALL_INTERFACE:include>
+        $<INSTALL_INTERFACE:include/CPPQmlModels>
+        $<INSTALL_INTERFACE:include/CPPQmlModels/QtSuperMacros>
     PRIVATE
         src
 )
 
-target_link_libraries(CPPQmlModels PRIVATE
+target_link_libraries(CPPQmlModels PUBLIC
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Qml
 )
@@ -84,10 +83,6 @@ install(TARGETS CPPQmlModels
 install(DIRECTORY src/
     DESTINATION include/CPPQmlModels
     FILES_MATCHING PATTERN "*.h"
-)
-
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/src/cppqmlmodels_export.h
-    DESTINATION include/CPPQmlModels
 )
 
 # Export configuration

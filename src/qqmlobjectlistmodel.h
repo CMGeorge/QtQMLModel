@@ -50,7 +50,7 @@ class QQMLMODELS_EXPORT QQmlObjectListModelBase
   public:
     explicit QQmlObjectListModelBase(QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
 
-  public slots: // virtual methods API for QML
+  public Q_SLOTS: // virtual methods API for QML
     virtual int size(void) const = 0;
     virtual int count(void) const = 0;
     virtual bool isEmpty(void) const = 0;
@@ -70,7 +70,7 @@ class QQMLMODELS_EXPORT QQmlObjectListModelBase
     virtual QObject *getLast(void) const = 0;
     virtual QVariantList toVarArray(void) const = 0;
 
-  protected slots: // internal callback
+  protected Q_SLOTS: // internal callback
     virtual void onItemPropertyChanged(void) = 0;
 
   Q_SIGNALS: // notifier
@@ -134,12 +134,9 @@ class /*QQMLMODELS_EXPORT*/ QQmlObjectListModel : public QQmlObjectListModelBase
         ItemType *item = at(index.row());
         if (item != Q_NULLPTR) {
             if (role == Qt::DisplayRole) {
-                // For Qt::DisplayRole, use m_dispRoleName if set, otherwise return the object
-                // itself
+                // For Qt::DisplayRole, use m_dispRoleName if set, otherwise return invalid
                 if (!m_dispRoleName.isEmpty()) {
                     ret.setValue(item->property(m_dispRoleName));
-                } else {
-                    ret.setValue(QVariant::fromValue(static_cast<QObject *>(item)));
                 }
             } else if (role == baseRole()) {
                 ret.setValue(QVariant::fromValue(static_cast<QObject *>(item)));

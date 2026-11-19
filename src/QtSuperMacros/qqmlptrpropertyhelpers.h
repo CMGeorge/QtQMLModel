@@ -15,7 +15,7 @@
     type *MAKE_GETTER_NAME(name)(void) const {                                                     \
         return m_##name;                                                                           \
     }                                                                                              \
-  public slots:                                                                                    \
+  public Q_SLOTS:                                                                                  \
     bool set_##name(type *name) {                                                                  \
         bool ret = false;                                                                          \
         if ((ret = (m_##name != name))) {                                                          \
